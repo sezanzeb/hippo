@@ -207,7 +207,6 @@ function zoomIn(elem) {
 				//the following controlls the scrollbar. fixes some issues compared to "auto" because
 				//the scrollbar can be displayed even though the height is still transitioning
 				//this needs to be the same number as in the .css file. search for 85 in there
-				console.log(img.offsetHeight + " " + window.innerHeight*0.8)
 				if(img.offsetHeight > window.innerHeight * 0.786)
 					addClass(getElemById("slides-img-container"),"tallImage")
 				else
