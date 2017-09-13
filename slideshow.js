@@ -68,7 +68,6 @@ function close() {
 	removeClass(getElemById("slides-lightbox-bg"),"category")
 	removeClass(getElemById("slides-lightbox-bg"),"open")
 	removeClass(getElemById("slides-img-container"),"loaded")
-	removeClass(getElemById("slides-img-container"),"tallImage")
 	getElemById("slides-img-height").style = ""
 	getElemById("slides-img").style = ""
 }
