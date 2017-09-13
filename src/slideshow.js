@@ -1,16 +1,19 @@
+const controlHeight = 60 //px
+const imgContainerHeight = 80 //% vh
+
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
 		'<div id="slides-lightbox-bg">'+
 			'<div id="slides-loading" class="slides-noopacity">loading...<br/>click to close</div>'+
 			'<div id="slides-centering">'+
-				'<div id="slides-controls">'+
+				'<div id="slides-controls" style="height:'+controlHeight+'px">'+
 					'<span id="slides-previousOff" class="slides-hidden" style="opacity:0.3;"></span>'+
 					'<span id="slides-previous" class="slides-hidden"></span>'+
 					'<span id="slides-next" class="slides-hidden"></span>'+
 					'<span id="slides-nextOff" class="slides-hidden" style="opacity:0.3;"></span>'+
 				'</div>'+
 				'<div id="slides-caption"></div>'+
-				'<div id="slides-img-container">'+
+				'<div id="slides-img-container" style="max-height:'+imgContainerHeight+'vh; border-top-width:'+(controlHeight-1)+'px">'+
 					'<div id="slides-img-height">'+
 						'<img id="slides-img" src=""/>'+
 					'</div>'+
@@ -28,7 +31,6 @@ window.addEventListener("load", function(e) {
 		})
 	}
 })
-
 
 
 /**
@@ -206,8 +208,8 @@ function zoomIn(elem) {
 				img.src = zoomedSrc
 				//the following controlls the scrollbar. fixes some issues compared to "auto" because
 				//the scrollbar can be displayed even though the height is still transitioning
-				//this needs to be the same number as in the .css file. search for 85 in there
-				if(img.offsetHeight > window.innerHeight * 0.786)
+				//this needs to be the same number as in the .css file. search for 80 in there
+				if(img.offsetHeight > (window.innerHeight * imgContainerHeight / 100.0 - controlHeight))
 					addClass(getElemById("slides-img-container"),"tallImage")
 				else
 					removeClass(getElemById("slides-img-container"),"tallImage")

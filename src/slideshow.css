@@ -39,12 +39,16 @@
 	margin: 0px auto;
 	box-sizing: border-box;
 	position: absolute;
-	top: 2vw;
 	border-radius: 2px;
+
+	/*acts like "min distance from left, right and bottom" and "center horicontaly"*/
+	/*top and bottom are also vw, so that the distance is the same on all screen edges*/
 	left: 2vw;
 	right: 2vw;
-	max-width: 850px;
 	bottom: 2vw;
+	top: 2vw;
+
+	max-width: 850px;
 	background: #182535;
 }
 
@@ -53,7 +57,7 @@
 	max-height: 100%;
 	padding:0px;
 	/*60-1 to prevent the 1px transparent slit that appears sometimes*/
-	border-top: 59px solid #182535;
+	border-top: 0px solid #182535;
 	box-sizing:border-box;
 	/*should have high radius, to prevent overlapping antialiasing from the controls and the img-container*/
 	border-top-left-radius:4px;
@@ -70,7 +74,7 @@
 }
 
 #slides-controls {
-	height: 60px;
+	/*height: 60px;*/ /*now configured in the .js file*/
 	padding: 10px 0px;
 	z-index: 500;
 	/*bottom: 0px;
@@ -227,6 +231,12 @@ img[zoom] {
 
 	#slides-img-container {
 		bottom:auto;
-		max-height: 80vh; /*this needs to be the same number as in the .js file. search for 0.8 in there*/
+		/*max-height: 80vh;*/
+	}
+}
+
+@media screen and (max-height:774px) {
+	#slides-img-container {
+		max-height: none !important;
 	}
 }
