@@ -11,3 +11,7 @@ Responsive &amp; does not depend on any additional library. The img tags don't n
     <img category="category" zoom="pic1.jpg" src="preview1.jpeg" caption="caption1"/>
     <img category="category" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
     <img caption="caption3" zoom="pic3.jpg" alt="click here"/>
+
+# live example
+
+http://hip70890b.de/web.php#Lightbox
