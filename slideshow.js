@@ -37,7 +37,6 @@ function load(event) {
 	dir = event.target.par1
 	elem = event.target.par2
 
-	getElemById("slides-img").style.opacity = "0"
 	//e is the listeners event
 
 	//disable listeners. Listeners are going to be created from scratch
@@ -69,6 +68,7 @@ function close() {
 	removeClass(getElemById("slides-lightbox-bg"),"category")
 	removeClass(getElemById("slides-lightbox-bg"),"open")
 	removeClass(getElemById("slides-img-container"),"loaded")
+	removeClass(getElemById("slides-img-container"),"tallImage")
 	getElemById("slides-img-height").style = ""
 	getElemById("slides-img").style = ""
 }
@@ -164,9 +164,17 @@ function zoomIn(elem) {
 			addClass(getElemById("slides-lightbox-bg"),"loaded")
 			addClass(getElemById("slides-loading"),"slides-noopacity")
 
-			img.style.opacity = "1"
 			var imgHeight = getElemById("slides-img-height")
 			imgHeight.style.height = img.offsetHeight + "px"
+
+			//this needs to be the same number as in the .css file. search for 85 in there
+			if(img.offsetHeight > window.innerHeight * 0.85) {
+				//there is going to be a scrollbar. set overflow-y to scroll, so that the image does not jump around
+				addClass(getElemById("slides-img-container"),"tallImage")
+			}
+			else {
+				removeClass(getElemById("slides-img-container"),"tallImage")
+			}
 		}
 
 		//start loading
