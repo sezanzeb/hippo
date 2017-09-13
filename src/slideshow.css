@@ -54,6 +54,7 @@
 	padding:0px;
 	/*60-1 to prevent the 1px transparent slit that appears sometimes*/
 	border-top: 59px solid #182535;
+	box-sizing:border-box;
 	/*should have high radius, to prevent overlapping antialiasing from the controls and the img-container*/
 	border-top-left-radius:4px;
 	border-top-right-radius:4px;
@@ -226,6 +227,6 @@ img[zoom] {
 
 	#slides-img-container {
 		bottom:auto;
-		max-height: 85vh; /*this needs to be the same number as in the .js file. search for 0.85 in there*/
+		max-height: 80vh; /*this needs to be the same number as in the .js file. search for 0.8 in there*/
 	}
 }

@@ -207,7 +207,8 @@ function zoomIn(elem) {
 				//the following controlls the scrollbar. fixes some issues compared to "auto" because
 				//the scrollbar can be displayed even though the height is still transitioning
 				//this needs to be the same number as in the .css file. search for 85 in there
-				if(img.offsetHeight > window.innerHeight * 0.85)
+				console.log(img.offsetHeight + " " + window.innerHeight*0.8)
+				if(img.offsetHeight > window.innerHeight * 0.786)
 					addClass(getElemById("slides-img-container"),"tallImage")
 				else
 					removeClass(getElemById("slides-img-container"),"tallImage")
@@ -242,6 +243,17 @@ function zoomIn(elem) {
 	else {
 		throw new Error("zoom getAttributeibute missing or empty")
 	}
+}
+
+
+
+/**
+ * https://stackoverflow.com/questions/7894577/read-css-property-of-an-element-using-javascript
+ */
+function getStyleProp(elem, prop){
+    if(window.getComputedStyle)
+        return window.getComputedStyle(elem, null).getPropertyValue(prop);
+    else if(elem.currentStyle) return elem.currentStyle[prop]; //IE
 }
 
 
