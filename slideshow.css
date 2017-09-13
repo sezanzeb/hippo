@@ -32,7 +32,7 @@
 	border: 0px solid #182535;
 	border-bottom-width: 15px;
 	overflow:hidden;
-	transition:height 0.2s ease-in-out;
+	transition:height 0.2s ease-in-out, opacity 0.1s ease-in-out;
 }
 
 #slides-controls, #slides-img-container {
@@ -49,7 +49,6 @@
 }
 
 #slides-img-container {
-	overflow: hidden;
 	box-shadow: 0px 3px 6px RGBa(0,0,0,0.4);
 	max-height: 100%;
 	padding:0px;
@@ -65,8 +64,7 @@
 	overflow-y: hidden;
 }
 
-#slides-img-container.tallImage
-{
+#slides-img-container.tallImage {
 	overflow-y:scroll;
 }
 
@@ -134,6 +132,10 @@
 #slides-previousOff,
 #slides-nextOff {
 	cursor:default;
+}
+
+.opacity0 {
+	opacity:0;
 }
 
 .slides-hidden {

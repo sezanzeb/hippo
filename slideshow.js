@@ -157,28 +157,34 @@ function zoomIn(elem) {
 		//the following onload listener will add classes once it's loaded.
 		//loading starts in the line below the listener. In the meantime let's prepare other things
 		var img = getElemById("slides-img")
+		var preloadimg = new Image()
 
-		img.onload = function() {
-			//once the image is loaded:
-			addClass(getElemById("slides-img-container"),"loaded")
-			addClass(getElemById("slides-lightbox-bg"),"loaded")
-			addClass(getElemById("slides-loading"),"slides-noopacity")
+		preloadimg.onload = function() {
+			window.setTimeout(function() {
+				//once the image is loaded:
+				img.src = zoomedSrc
+				//the following controlls the scrollbar. fixes some issues compared to "auto" because
+				//the scrollbar can be displayed even though the height is still transitioning
+				//this needs to be the same number as in the .css file. search for 85 in there
+				if(img.offsetHeight > window.innerHeight * 0.85)
+					addClass(getElemById("slides-img-container"),"tallImage")
+				else
+					removeClass(getElemById("slides-img-container"),"tallImage")
 
-			var imgHeight = getElemById("slides-img-height")
-			imgHeight.style.height = img.offsetHeight + "px"
+				addClass(getElemById("slides-img-container"),"loaded")
+				addClass(getElemById("slides-lightbox-bg"),"loaded")
+				addClass(getElemById("slides-loading"),"slides-noopacity")
 
-			//this needs to be the same number as in the .css file. search for 85 in there
-			if(img.offsetHeight > window.innerHeight * 0.85) {
-				//there is going to be a scrollbar. set overflow-y to scroll, so that the image does not jump around
-				addClass(getElemById("slides-img-container"),"tallImage")
-			}
-			else {
-				removeClass(getElemById("slides-img-container"),"tallImage")
-			}
+				var imgHeight = getElemById("slides-img-height")
+				imgHeight.style.height = img.offsetHeight + "px"
+				removeClass(getElemById("slides-img-height"),"opacity0")
+			},100)
 		}
 
+		//first hide the img tag
+		addClass(getElemById("slides-img-height"),"opacity0")
 		//start loading
-		img.src = zoomedSrc
+		preloadimg.src = zoomedSrc
 
 		//if this is a slideshow (category getAttributeibute)
 		var category = elem.getAttribute("category")
