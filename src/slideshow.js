@@ -246,17 +246,6 @@ function zoomIn(elem) {
 
 
 
-/**
- * https://stackoverflow.com/questions/7894577/read-css-property-of-an-element-using-javascript
- */
-function getStyleProp(elem, prop){
-    if(window.getComputedStyle)
-        return window.getComputedStyle(elem, null).getPropertyValue(prop);
-    else if(elem.currentStyle) return elem.currentStyle[prop]; //IE
-}
-
-
-
 function removeClass(elem,classString) {
   elem.className = elem.className.replace(new RegExp('(?:^|\\s)'+ classString + '(?:\\s|$)'), '')
 }
