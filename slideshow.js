@@ -11,7 +11,9 @@ window.addEventListener("load", function(e) {
 				'</div>'+
 				'<div id="slides-caption"></div>'+
 				'<div id="slides-img-container">'+
-					'<img id="slides-img" src=""/>'+
+					'<div id="slides-img-height">'+
+						'<img id="slides-img" src=""/>'+
+					'</div>'+
 					'<div id="slides-caption-responsive"></div>'+
 				'</div>'+
 			'</div>'+
@@ -35,7 +37,7 @@ function load(event) {
 	dir = event.target.par1
 	elem = event.target.par2
 
-	getElemById("slides-img").style = "visibility:hidden"
+	getElemById("slides-img").style.opacity = "0"
 	//e is the listeners event
 
 	//disable listeners. Listeners are going to be created from scratch
@@ -67,6 +69,8 @@ function close() {
 	removeClass(getElemById("slides-lightbox-bg"),"category")
 	removeClass(getElemById("slides-lightbox-bg"),"open")
 	removeClass(getElemById("slides-img-container"),"loaded")
+	getElemById("slides-img-height").style = ""
+	getElemById("slides-img").style = ""
 }
 
 function handlegroup(elem,category) {
@@ -153,12 +157,18 @@ function zoomIn(elem) {
 		//the following onload listener will add classes once it's loaded.
 		//loading starts in the line below the listener. In the meantime let's prepare other things
 		var img = getElemById("slides-img")
+
 		img.onload = function() {
-			getElemById("slides-img").style = "visibility:visible"
+			//once the image is loaded:
 			addClass(getElemById("slides-img-container"),"loaded")
 			addClass(getElemById("slides-lightbox-bg"),"loaded")
 			addClass(getElemById("slides-loading"),"slides-noopacity")
+
+			img.style.opacity = "1"
+			var imgHeight = getElemById("slides-img-height")
+			imgHeight.style.height = img.offsetHeight + "px"
 		}
+
 		//start loading
 		img.src = zoomedSrc
 
@@ -174,8 +184,7 @@ function zoomIn(elem) {
 			addClass(getElemById("slides-previousOff"),"slides-hidden")
 		}
 	}
-	else
-	{
+	else {
 		throw new Error("zoom getAttributeibute missing or empty")
 	}
 }
