@@ -29,16 +29,20 @@ window.addEventListener("load", function(e) {
 	}
 })
 
-//going to be called onclick
-function load(event) {
-	//to prevent the listener from closing the lightbox once it's opened. The event will only stop once the function terminates, or when manually stopping it
-	event.stopPropagation()
 
+
+/**
+ * going to be called onclick on a button. The event is created in activateButton
+ *
+ * @param event		the event object that the browser creates
+ */
+function load(event) {
+	//to prevent the listener from closing the lightbox once it's opened.
+	//The event will only stop once the function terminates, or when manually stopping it
+	event.stopPropagation()
+	//those params are stored inside the button (the event target) in activateButton
 	dir = event.target.par1
 	elem = event.target.par2
-
-	//e is the listeners event
-
 	//disable listeners. Listeners are going to be created from scratch
 	getElemById("slides-lightbox-bg").removeEventListener("click",close)
 	getElemById(dir).removeEventListener("click",load)
@@ -46,8 +50,16 @@ function load(event) {
 	zoomIn(elem)
 }
 
-//going to be called if next or previous is active
-function activateButton(dir,key,elem,img) {
+
+
+/**
+ * going to be called to take care of the Buttons. Called within handlegroup
+ *
+ * @param dir		string, either "slides-previous" or "slides-next"
+ * @param elem	dom element of the next <img> tag inside the website-content
+ * @param img		the img tag that was clicked on the website content
+ */
+function activateButton(dir,elem,img) {
 
 	//adjust visibility
 	addClass(getElemById(dir+"Off"),"slides-hidden")
@@ -55,13 +67,18 @@ function activateButton(dir,key,elem,img) {
 
 	var dirButton = getElemById(dir)
 	//parameters need to be passed like this, because otherwise removeEventListener won't work
-	dirButton.par1 = dir
-	dirButton.par2 = elem
+	dirButton.par1 = dir	//either "slides-previous" or "slides-next", to be stored inside the button as parameter
+	dirButton.par2 = elem //so that the event on the dirbutton knows which image to load next
 
 	dirButton.addEventListener("click",load)
 
 }
 
+
+
+/**
+ * called on click on #slides-lightbox-bg
+ */
 function close() {
 	addClass(getElemById("slides-loading"),"slides-noopacity")
 	removeClass(getElemById("slides-lightbox-bg"),"loaded")
@@ -72,6 +89,16 @@ function close() {
 	getElemById("slides-img").style = ""
 }
 
+
+
+/**
+ * this will prepare some stuff that is needed to go to next/previous images
+ * such as hiding/displaying buttons, creating event listeners for the buttons,
+ * and get the img urls for next/previous pictures from "imagesList2", which are all img dom elements that have the zoom and same category tag.
+ *
+ * @param elem			the img tag that was clicked on the website content
+ * @param category	the category tag value from elem
+ */
 function handlegroup(elem,category) {
 	//if the button is Off, don't put an listener on it
 	//prevent closing the slideshow onclick on Off buttons
@@ -100,17 +127,17 @@ function handlegroup(elem,category) {
 			}
 		}
 	}
-
+	//
 	//create events to next/previous picture
 	if(nextImg !== false && typeof nextImg !== typeof undefined) {
-		activateButton("slides-next",39,nextImg,elem)
+		activateButton("slides-next",nextImg,elem)
 	}
 	else {
 		addClass(getElemById("slides-next"),"slides-hidden")
 		removeClass(getElemById("slides-nextOff"),"slides-hidden")
 	}
 	if(previousImg !== false && typeof previousImg !== typeof undefined) {
-		activateButton("slides-previous",37,previousImg,elem)
+		activateButton("slides-previous",previousImg,elem)
 	}
 	else {
 		addClass(getElemById("slides-previous"),"slides-hidden")
@@ -118,7 +145,15 @@ function handlegroup(elem,category) {
 	}
 }
 
-//make the loading indicator asynchronously with delay, otherwise the transition will not work because of the none display
+
+
+/**
+ * make the loading indicator asynchronously with delay,
+ * otherwise the transition will not work because of the none display
+ *
+ * (i think this is deprecated, nothing is display:none anymore but rather
+ *  opacity:0 and pointer-events:none so that things can fade in and out)
+ */
 function showLoadingIndicator() {
 	setTimeout(function() {
 		if(!hasClass(getElemById("slides-img-container"),"loaded"))
@@ -130,6 +165,13 @@ function showLoadingIndicator() {
 	},20)
 }
 
+
+
+/**
+ * Either called by one of the buttons in load or by clicking on an image
+ *
+ * @param elem	the image dom element that is going to be displayed in the lightbox
+ */
 function zoomIn(elem) {
 
 	//close preview. This has to be done at the beginning, otherwise the lightbox might not close on errors
@@ -201,6 +243,8 @@ function zoomIn(elem) {
 		throw new Error("zoom getAttributeibute missing or empty")
 	}
 }
+
+
 
 function removeClass(elem,classString) {
   elem.className = elem.className.replace(new RegExp('(?:^|\\s)'+ classString + '(?:\\s|$)'), '')
