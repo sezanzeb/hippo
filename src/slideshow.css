@@ -49,6 +49,7 @@
 	top: 2vw;
 
 	max-width: 850px;
+	width: 850px;
 	background: #182535;
 }
 
@@ -107,6 +108,7 @@
 	left: 0px;
 	right: 0px;
 	max-width: 500px;
+	width: 500px;
 	line-height: 60px;
 	pointer-events: none;
 	z-index: 550;
@@ -205,7 +207,7 @@ img[zoom] {
 	display:none;
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:850px) {
 	#slides-caption
 	{
 		display:none;
@@ -224,6 +226,23 @@ img[zoom] {
 	}
 }
 
+
+/**
+ * IE needs the width to be set for centering by position:absolute.
+ * But a set width will make the page less responsive, that means it has do be
+ * disabled again at some point
+ */
+@media screen and (max-width:890px) {
+	#slides-controls, #slides-img-container {
+		width: auto;
+	}
+	
+	#slides-caption {
+		width: auto;
+	}
+}
+
+
 @media screen and (min-height:775px) {
 	#slides-img-container img {
 		padding-bottom:0px;
@@ -234,6 +253,7 @@ img[zoom] {
 		/*max-height: 80vh;*/
 	}
 }
+
 
 @media screen and (max-height:774px) {
 	#slides-img-container {
