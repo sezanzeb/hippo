@@ -12,6 +12,7 @@ latest stable: https://github.com/sezanzeb/Hippo/releases/tag/1.0
 - Supports IE9
 - Link two files, add an attribute to your img tag, done.
 
+<br/>
 
 <br/>
 
@@ -58,4 +59,4 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
 
 ## TODO
 
-- closing using the esc-key
+- support closing using the esc-key and navigating by using arrow keys
