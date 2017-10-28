@@ -5,12 +5,83 @@
 		<link rel="stylesheet" href="../src/hippo-gallery.css" type="text/css">
 	</head>
 	<body>
-		<!-- they don't need to be in the same container -->
-		<div>
-			<img category="examplegroup" zoom="pic1.jpeg" alt='"pic1 (click)"' caption='"picture 1"'/>
-			<p><img category="examplegroup" zoom="pic2.jpeg" src="pic2.jpeg" caption='"picture 2"'/></p>
-		</div>
-		<p><img category="examplegroup" zoom="pic3.jpeg" src="pic3.jpeg" caption='"picture 3"'/></p>
+		<!-- they don't need to be in the same container, that's one of the reasons why i wrote this -->
+		<p><img category="examplegroup" zoom="pic2.jpeg" src="pic2.jpeg" caption='Picture One'/></p>
+		<p><img category="examplegroup" zoom="pic1.jpeg" alt='"pic1 (click)"' caption='Picture Two'/></p>
+		<p><img category="examplegroup" zoom="pic3.jpeg" src="pic3.jpeg" caption='Picture Three'/></p>
+		<p>
+			<div class="hippo-zoomContent" category="examplegroup" caption='Text'/>
+				<p>Click me</p>
+				<div class="hippo-zoomContent-content">
+					<h1>Hello World</h1>
+					<p>
+						Quasi pariatur quis repellendus corrupti delectus. Praesentium corrupti harum et. Consequatur ut tempora laudantium.
+					</p>
+					<p>
+						Fugiat illo quo qui eum ea praesentium. Possimus corrupti temporibus quia. Voluptatem consequatur aut aut. Voluptas 
+						sint ut magni minus aperiam quo. Dicta aut aut sed veritatis ut est ratione. Illum quis et voluptas quod voluptas.
+					</p>
+					<p>
+						Occaecati occaecati doloremque illo deserunt soluta quo. Eum repellendus similique veniam velit non aut. Ut repellat 
+						voluptas earum omnis in. Esse est itaque eos harum tempora quam. Et voluptatibus qui cupiditate. Nihil esse ut delectus et fuga aut.
+					</p>
+					<p>
+						Autem praesentium facere atque debitis exercitationem. Ut est et voluptas molestias modi odio. Minima distinctio 
+						mollitia aut adipisci deleniti labore pariatur in.
+					</p>
+					<p>
+						Ad rerum sunt quae voluptate facilis doloribus. Aut necessitatibus vero voluptatem veritatis. Dolores voluptates 
+						esse ullam sunt quasi nam veniam. Tempora ut rerum voluptate eos quo officia et. Sequi alias libero facere non. Omnis
+						quo odit illum quia temporibus provident et earum.
+					</p>
+					<p>
+						Quasi pariatur quis repellendus corrupti delectus. Praesentium corrupti harum et. Consequatur ut tempora laudantium.
+					</p>
+					<p>
+						Fugiat illo quo qui eum ea praesentium. Possimus corrupti temporibus quia. Voluptatem consequatur aut aut. Voluptas 
+						sint ut magni minus aperiam quo. Dicta aut aut sed veritatis ut est ratione. Illum quis et voluptas quod voluptas.
+					</p>
+					<p>
+						Occaecati occaecati doloremque illo deserunt soluta quo. Eum repellendus similique veniam velit non aut. Ut repellat 
+						voluptas earum omnis in. Esse est itaque eos harum tempora quam. Et voluptatibus qui cupiditate. Nihil esse ut delectus et fuga aut.
+					</p>
+					<p>
+						Autem praesentium facere atque debitis exercitationem. Ut est et voluptas molestias modi odio. Minima distinctio 
+						mollitia aut adipisci deleniti labore pariatur in.
+					</p>
+					<p>
+						Ad rerum sunt quae voluptate facilis doloribus. Aut necessitatibus vero voluptatem veritatis. Dolores voluptates 
+						esse ullam sunt quasi nam veniam. Tempora ut rerum voluptate eos quo officia et. Sequi alias libero facere non. Omnis
+						quo odit illum quia temporibus provident et earum.
+					</p>
+					<p>
+						Ad rerum sunt quae voluptate facilis doloribus. Aut necessitatibus vero voluptatem veritatis. Dolores voluptates 
+						esse ullam sunt quasi nam veniam. Tempora ut rerum voluptate eos quo officia et. Sequi alias libero facere non. Omnis
+						quo odit illum quia temporibus provident et earum.
+					</p>
+					<p>
+						Quasi pariatur quis repellendus corrupti delectus. Praesentium corrupti harum et. Consequatur ut tempora laudantium.
+					</p>
+					<p>
+						Fugiat illo quo qui eum ea praesentium. Possimus corrupti temporibus quia. Voluptatem consequatur aut aut. Voluptas 
+						sint ut magni minus aperiam quo. Dicta aut aut sed veritatis ut est ratione. Illum quis et voluptas quod voluptas.
+					</p>
+					<p>
+						Occaecati occaecati doloremque illo deserunt soluta quo. Eum repellendus similique veniam velit non aut. Ut repellat 
+						voluptas earum omnis in. Esse est itaque eos harum tempora quam. Et voluptatibus qui cupiditate. Nihil esse ut delectus et fuga aut.
+					</p>
+					<p>
+						Autem praesentium facere atque debitis exercitationem. Ut est et voluptas molestias modi odio. Minima distinctio 
+						mollitia aut adipisci deleniti labore pariatur in.
+					</p>
+					<p>
+						Ad rerum sunt quae voluptate facilis doloribus. Aut necessitatibus vero voluptatem veritatis. Dolores voluptates 
+						esse ullam sunt quasi nam veniam. Tempora ut rerum voluptate eos quo officia et. Sequi alias libero facere non. Omnis
+						quo odit illum quia temporibus provident et earum.
+					</p>
+				</div>
+			</div>
+		</p>
 	</body>
 </hmtl>
 
@@ -23,19 +94,16 @@
 		color:#333;
 	}
 
-	img[alt][zoom]
-	{
-		background: #fff;
-		padding:30px;
-		box-sizing:border-box;
-		text-align: center;
-	}
-
-	img[zoom]
+	img[zoom], .hippo-zoomContent
 	{
 		width:400px;
 		margin: 0px auto;
 		display: block;
+		background: #fff;
+		box-sizing:border-box;
+		text-align: center;
+		line-height:50px;
+		box-shadow:0px 1px 2px #ddd;
 	}
 
 	#credits

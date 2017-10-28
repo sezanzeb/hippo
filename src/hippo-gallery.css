@@ -1,3 +1,11 @@
+.hippo-zoomContent {
+	cursor:pointer;
+}
+
+.hippo-zoomContent-content {
+	display:none;
+}
+
 #hippo-loading {
 	margin: 0px auto;
 	vertical-align: middle;
@@ -14,9 +22,19 @@
 	transition:opacity 1s ease-in;
 }
 
-#hippo-lightbox-bg * {
+#hippo-previousOff,
+#hippo-previous,
+#hippo-nextOff,
+#hippo-next,
+#hippo-caption,
+#hippo-caption-responsive {
 	font-family: sans-serif;
 	color:white;
+}
+
+#hippo-img-height {
+	background: RGBa(255,255,255,0.2);
+	color: white;
 }
 
 #hippo-img {
@@ -25,6 +43,7 @@
 	width:100%;
 	z-index:400;
 	position:relative;
+	display:block;
 }
 
 #hippo-img-height {
@@ -49,6 +68,11 @@
 
 	max-width: 850px;
 	width: 850px; /* IE needs a set width, so that this can be centered. This is going to be disabled using responsive rules later */
+}
+
+#hippo-caption-responsive,
+#hippo-controls,
+#hippo-img-container {
 	background: #182535;
 }
 
@@ -205,6 +229,17 @@ img[zoom] {
 	display:none;
 }
 
+#hippo-div {
+	cursor: default;
+	padding: 2vw;
+	text-align: left;
+}
+
+#hippo-div:empty,
+#hippo-img[src=""] {
+	display: none;
+}
+
 @media screen and (max-width:850px) {
 	#hippo-caption {
 		display:none;
@@ -212,8 +247,8 @@ img[zoom] {
 
 	#hippo-caption-responsive {
 		display:block;
-		padding-top: 15px;
-		padding-bottom: 6px;
+		padding-top: 18px;
+		padding-bottom: 4px;
 	}
 
 	#hippo-controls {
