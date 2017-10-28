@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="../src/slideshow.js"></script>
-		<link rel="stylesheet" href="../src/slideshow.css" type="text/css">
+		<script src="../src/hippo-gallery.js"></script>
+		<link rel="stylesheet" href="../src/hippo-gallery.css" type="text/css">
 	</head>
 	<body>
-		<!-- they don't need to be in the same container, that's one of the reasons why i wrote this -->
-		<p><img category="examplegroup" zoom="pic2.jpeg" src="pic2.jpeg" caption='"picture 2"'/></p>
-		<p><img category="examplegroup" zoom="pic1.jpeg" alt='"pic1 (click)"' caption='"picture 1"'/></p>
+		<!-- they don't need to be in the same container -->
+		<div>
+			<img category="examplegroup" zoom="pic1.jpeg" alt='"pic1 (click)"' caption='"picture 1"'/>
+			<p><img category="examplegroup" zoom="pic2.jpeg" src="pic2.jpeg" caption='"picture 2"'/></p>
+		</div>
 		<p><img category="examplegroup" zoom="pic3.jpeg" src="pic3.jpeg" caption='"picture 3"'/></p>
 	</body>
 </hmtl>

@@ -1,22 +1,22 @@
-const controlHeight = 60 //px
-const imgContainerHeight = 80 //% vh
+var controlHeight = 60 //px
+var imgContainerHeight = 80 //% vh
 
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
-		'<div id="slides-lightbox-bg">'+
-			'<div id="slides-loading" class="slides-noopacity">loading...<br/>click to close</div>'+
-			'<div id="slides-centering">'+
-				'<div id="slides-controls" style="height:'+controlHeight+'px">'+
-					'<span id="slides-previousOff" class="slides-hidden" style="opacity:0.3;"></span>'+
-					'<span id="slides-previous" class="slides-hidden"></span>'+
-					'<span id="slides-next" class="slides-hidden"></span>'+
-					'<span id="slides-nextOff" class="slides-hidden" style="opacity:0.3;"></span>'+
+		'<div style="display:none" id="hippo-lightbox-bg">'+
+			'<div id="hippo-loading" class="hippo-noopacity">loading...<br/>click to close</div>'+
+			'<div id="hippo-centering">'+
+				'<div id="hippo-controls" style="height:'+controlHeight+'px">'+
+					'<span id="hippo-previousOff" class="hippo-hidden" style="opacity:0.3;"></span>'+
+					'<span id="hippo-previous" class="hippo-hidden"></span>'+
+					'<span id="hippo-next" class="hippo-hidden"></span>'+
+					'<span id="hippo-nextOff" class="hippo-hidden" style="opacity:0.3;"></span>'+
 				'</div>'+
-				'<div id="slides-caption"></div>'+
-				'<div id="slides-img-container" style="max-height:'+imgContainerHeight+'vh; border-top-width:'+(controlHeight-1)+'px">'+
-					'<div id="slides-img-height">'+
-						'<img id="slides-img" src=""/>'+
-						'<div id="slides-caption-responsive"></div>'+
+				'<div id="hippo-caption"></div>'+
+				'<div id="hippo-img-container" style="max-height:'+imgContainerHeight+'vh; border-top-width:'+(controlHeight-1)+'px">'+
+					'<div id="hippo-img-height">'+
+						'<img id="hippo-img" src=""/>'+
+						'<div id="hippo-caption-responsive"></div>'+
 					'</div>'+
 				'</div>'+
 			'</div>'+
@@ -26,8 +26,13 @@ window.addEventListener("load", function(e) {
 	var elems = document.querySelectorAll("img[zoom]")
 	for(var i = 0;i < elems.length; i++)
 	{
-		elems[i].addEventListener("click",function() {
-			zoomIn(this)
+		elems[i].addEventListener("click",function(e) {
+			document.getElementById("hippo-lightbox-bg").style.display = ""
+			//some timeout so that the transition will be triggered.
+			//because of the previous display:none it would be prevented by default.
+			window.setTimeout(function() {
+				zoomIn(e.target)
+			},15)
 		})
 	}
 })
@@ -46,7 +51,7 @@ function load(event) {
 	dir = event.target.par1
 	elem = event.target.par2
 	//disable listeners. Listeners are going to be created from scratch
-	getElemById("slides-lightbox-bg").removeEventListener("click",close)
+	getElemById("hippo-lightbox-bg").removeEventListener("click",close)
 	getElemById(dir).removeEventListener("click",load)
 
 	zoomIn(elem)
@@ -57,19 +62,19 @@ function load(event) {
 /**
  * going to be called to take care of the Buttons. Called within handlegroup
  *
- * @param dir		string, either "slides-previous" or "slides-next"
+ * @param dir		string, either "hippo-previous" or "hippo-next"
  * @param elem	dom element of the next <img> tag inside the website-content
  * @param img		the img tag that was clicked on the website content
  */
 function activateButton(dir,elem,img) {
 
 	//adjust visibility
-	addClass(getElemById(dir+"Off"),"slides-hidden")
-	removeClass(getElemById(dir),"slides-hidden")
+	addClass(getElemById(dir+"Off"),"hippo-hidden")
+	removeClass(getElemById(dir),"hippo-hidden")
 
 	var dirButton = getElemById(dir)
 	//parameters need to be passed like this, because otherwise removeEventListener won't work
-	dirButton.par1 = dir	//either "slides-previous" or "slides-next", to be stored inside the button as parameter
+	dirButton.par1 = dir	//either "hippo-previous" or "hippo-next", to be stored inside the button as parameter
 	dirButton.par2 = elem //so that the event on the dirbutton knows which image to load next
 
 	dirButton.addEventListener("click",load)
@@ -79,16 +84,19 @@ function activateButton(dir,elem,img) {
 
 
 /**
- * called on click on #slides-lightbox-bg
+ * called on click on #hippo-lightbox-bg
  */
 function close() {
-	addClass(getElemById("slides-loading"),"slides-noopacity")
-	removeClass(getElemById("slides-lightbox-bg"),"loaded")
-	removeClass(getElemById("slides-lightbox-bg"),"category")
-	removeClass(getElemById("slides-lightbox-bg"),"open")
-	removeClass(getElemById("slides-img-container"),"loaded")
-	getElemById("slides-img-height").style = ""
-	getElemById("slides-img").style = ""
+	addClass(getElemById("hippo-loading"),"hippo-noopacity")
+	removeClass(getElemById("hippo-lightbox-bg"),"loaded")
+	removeClass(getElemById("hippo-lightbox-bg"),"category")
+	removeClass(getElemById("hippo-lightbox-bg"),"open")
+	removeClass(getElemById("hippo-img-container"),"loaded")
+	getElemById("hippo-img-height").style = ""
+	getElemById("hippo-img").style = ""
+	window.setTimeout(function() {
+		document.getElementById("hippo-lightbox-bg").style.display = "none"
+	},200) /* as much timeout as transition duration in the css */
 }
 
 
@@ -104,10 +112,10 @@ function close() {
 function handlegroup(elem,category) {
 	//if the button is Off, don't put an listener on it
 	//prevent closing the slideshow onclick on Off buttons
-	getElemById("slides-previousOff").addEventListener("click",function(e) {
+	getElemById("hippo-previousOff").addEventListener("click",function(e) {
 		e.stopPropagation()
 	})
-	getElemById("slides-nextOff").addEventListener("click",function(e) {
+	getElemById("hippo-nextOff").addEventListener("click",function(e) {
 		e.stopPropagation()
 	})
 
@@ -132,18 +140,18 @@ function handlegroup(elem,category) {
 	//
 	//create events to next/previous picture
 	if(nextImg !== false && typeof nextImg !== typeof undefined) {
-		activateButton("slides-next",nextImg,elem)
+		activateButton("hippo-next",nextImg,elem)
 	}
 	else {
-		addClass(getElemById("slides-next"),"slides-hidden")
-		removeClass(getElemById("slides-nextOff"),"slides-hidden")
+		addClass(getElemById("hippo-next"),"hippo-hidden")
+		removeClass(getElemById("hippo-nextOff"),"hippo-hidden")
 	}
 	if(previousImg !== false && typeof previousImg !== typeof undefined) {
-		activateButton("slides-previous",previousImg,elem)
+		activateButton("hippo-previous",previousImg,elem)
 	}
 	else {
-		addClass(getElemById("slides-previous"),"slides-hidden")
-		removeClass(getElemById("slides-previousOff"),"slides-hidden")
+		addClass(getElemById("hippo-previous"),"hippo-hidden")
+		removeClass(getElemById("hippo-previousOff"),"hippo-hidden")
 	}
 }
 
@@ -158,9 +166,9 @@ function handlegroup(elem,category) {
  */
 function showLoadingIndicator() {
 	setTimeout(function() {
-		if(!hasClass(getElemById("slides-img-container"),"loaded"))
+		if(!hasClass(getElemById("hippo-img-container"),"loaded"))
 		{
-			removeClass(getElemById("slides-loading"),"slides-noopacity")
+			removeClass(getElemById("hippo-loading"),"hippo-noopacity")
 		}
 		else {
 		}
@@ -177,29 +185,29 @@ function showLoadingIndicator() {
 function zoomIn(elem) {
 
 	//close preview. This has to be done at the beginning, otherwise the lightbox might not close on errors
-	getElemById("slides-lightbox-bg").addEventListener("click",close)
+	getElemById("hippo-lightbox-bg").addEventListener("click",close)
 
 	//show that the image is loading
 	showLoadingIndicator()
 
 	//display the lightbox bg
-	addClass(getElemById("slides-lightbox-bg"),"open")
+	addClass(getElemById("hippo-lightbox-bg"),"open")
 
 	//hide the current displayed picture, if there is one
-	removeClass(getElemById("slides-img-container"),"loaded")
+	removeClass(getElemById("hippo-img-container"),"loaded")
 
 	//get address of the zoomedin picture from getAttributeibutes
 	var zoomedSrc = elem.getAttribute("zoom")
 
-	getElemById("slides-caption").innerHTML = elem.getAttribute("caption")
-	getElemById("slides-caption-responsive").innerHTML = elem.getAttribute("caption")
+	getElemById("hippo-caption").innerHTML = elem.getAttribute("caption")
+	getElemById("hippo-caption-responsive").innerHTML = elem.getAttribute("caption")
 
 	//if zoom getAttributeibute exists
 	if(zoomedSrc !== false && zoomedSrc != "" && typeof zoomedSrc !== typeof undefined) {
 
 		//the following onload listener will add classes once it's loaded.
 		//loading starts in the line below the listener. In the meantime let's prepare other things
-		var img = getElemById("slides-img")
+		var img = getElemById("hippo-img")
 		var preloadimg = new Image()
 
 		preloadimg.onload = function() {
@@ -209,26 +217,26 @@ function zoomIn(elem) {
 				//the following controlls the scrollbar. fixes some issues compared to "auto" because
 				//the scrollbar can be displayed even though the height is still transitioning
 				//this needs to be the same number as in the .css file. search for 80 in there
-				var height = img.offsetHeight + getElemById("slides-caption-responsive").offsetHeight
-				console.log(img.offsetHeight,height,getElemById("slides-caption-responsive").offsetHeight)
+				var height = img.offsetHeight + getElemById("hippo-caption-responsive").offsetHeight
+				console.log(img.offsetHeight,height,getElemById("hippo-caption-responsive").offsetHeight)
 				
 				if(img.offsetHeight > (window.innerHeight * imgContainerHeight / 100.0 - controlHeight))
-					addClass(getElemById("slides-img-container"),"tallImage")
+					addClass(getElemById("hippo-img-container"),"tallImage")
 				else
-					removeClass(getElemById("slides-img-container"),"tallImage")
+					removeClass(getElemById("hippo-img-container"),"tallImage")
 
-				addClass(getElemById("slides-img-container"),"loaded")
-				addClass(getElemById("slides-lightbox-bg"),"loaded")
-				addClass(getElemById("slides-loading"),"slides-noopacity")
+				addClass(getElemById("hippo-img-container"),"loaded")
+				addClass(getElemById("hippo-lightbox-bg"),"loaded")
+				addClass(getElemById("hippo-loading"),"hippo-noopacity")
 
-				var imgHeightElement = getElemById("slides-img-height")
+				var imgHeightElement = getElemById("hippo-img-height")
 				imgHeightElement.style.height = height + "px"
-				removeClass(getElemById("slides-img-height"),"opacity0")
+				removeClass(getElemById("hippo-img-height"),"opacity0")
 			},100)
 		}
 
 		//first hide the img tag
-		addClass(getElemById("slides-img-height"),"opacity0")
+		addClass(getElemById("hippo-img-height"),"opacity0")
 		//start loading
 		preloadimg.src = zoomedSrc
 
@@ -238,10 +246,10 @@ function zoomIn(elem) {
 			handlegroup(elem,category)
 
 		} else { //if no category available
-			addClass(getElemById("slides-next"),"slides-hidden")
-			addClass(getElemById("slides-previous"),"slides-hidden")
-			addClass(getElemById("slides-nextOff"),"slides-hidden")
-			addClass(getElemById("slides-previousOff"),"slides-hidden")
+			addClass(getElemById("hippo-next"),"hippo-hidden")
+			addClass(getElemById("hippo-previous"),"hippo-hidden")
+			addClass(getElemById("hippo-nextOff"),"hippo-hidden")
+			addClass(getElemById("hippo-previousOff"),"hippo-hidden")
 		}
 	}
 	else {

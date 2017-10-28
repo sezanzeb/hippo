@@ -1,4 +1,4 @@
-#slides-loading {
+#hippo-loading {
 	margin: 0px auto;
 	vertical-align: middle;
 	text-align:center;
@@ -14,12 +14,12 @@
 	transition:opacity 1s ease-in;
 }
 
-#slides-lightbox-bg * {
+#hippo-lightbox-bg * {
 	font-family: sans-serif;
 	color:white;
 }
 
-#slides-img {
+#hippo-img {
 	margin: 0px auto;
 	/*padding-bottom: 4vw;*/
 	width:100%;
@@ -27,14 +27,14 @@
 	position:relative;
 }
 
-#slides-img-height {
+#hippo-img-height {
 	border: 0px solid #182535;
 	border-bottom-width: 15px;
 	overflow:hidden;
 	transition:height 0.2s ease-in-out, opacity 0.1s ease-in-out;
 }
 
-#slides-controls, #slides-img-container {
+#hippo-controls, #hippo-img-container {
 	margin: 0px auto;
 	box-sizing: border-box;
 	position: absolute;
@@ -52,7 +52,7 @@
 	background: #182535;
 }
 
-#slides-img-container {
+#hippo-img-container {
 	box-shadow: 0px 3px 6px RGBa(0,0,0,0.4);
 	max-height: 100%;
 	padding:0px;
@@ -69,11 +69,11 @@
 	overflow-y: hidden;
 }
 
-#slides-img-container.tallImage {
+#hippo-img-container.tallImage {
 	overflow-y:scroll;
 }
 
-#slides-controls {
+#hippo-controls {
 	/*height: 60px;*/ /*now configured in the .js file*/
 	padding: 10px 0px;
 	z-index: 500;
@@ -85,10 +85,10 @@
 	border-bottom-right-radius:0px;
 }
 
-#slides-controls #slides-previous,
-#slides-controls #slides-previousOff,
-#slides-controls #slides-next,
-#slides-controls #slides-nextOff {
+#hippo-controls #hippo-previous,
+#hippo-controls #hippo-previousOff,
+#hippo-controls #hippo-next,
+#hippo-controls #hippo-nextOff {
 	padding:10px 6%;
 	display: inline-block;
 	width: 40px;
@@ -100,7 +100,7 @@
 	position:absolute;
 }
 
-#slides-caption {
+#hippo-caption {
 	position: absolute;
 	top: 2vw;
 	margin: 0px auto;
@@ -113,30 +113,30 @@
 	z-index: 550;
 }
 
-#slides-controls #slides-previous,
-#slides-controls #slides-previousOff {
+#hippo-controls #hippo-previous,
+#hippo-controls #hippo-previousOff {
 	left:0px;
 	padding-left:20px;
 }
 
-#slides-controls #slides-next,
-#slides-controls #slides-nextOff {
+#hippo-controls #hippo-next,
+#hippo-controls #hippo-nextOff {
 	right:0px;
 	padding-right:20px;
 }
 
-#slides-controls #slides-previous:before,
-#slides-controls #slides-previousOff:before {
+#hippo-controls #hippo-previous:before,
+#hippo-controls #hippo-previousOff:before {
 	content: "back";
 }
 
-#slides-controls #slides-next:before,
-#slides-controls #slides-nextOff:before {
+#hippo-controls #hippo-next:before,
+#hippo-controls #hippo-nextOff:before {
 	content: "next";
 }
 
-#slides-previousOff,
-#slides-nextOff {
+#hippo-previousOff,
+#hippo-nextOff {
 	cursor:default;
 }
 
@@ -144,11 +144,11 @@
 	opacity:0;
 }
 
-.slides-hidden {
+.hippo-hidden {
 	display:none !important;
 }
 
-.slides-noopacity {
+.hippo-noopacity {
 	opacity:0 !important;
 	transition:none !important;
 }
@@ -159,7 +159,7 @@ img[zoom] {
 	position:relative;
 }
 
-#slides-lightbox-bg {
+#hippo-lightbox-bg {
 	/*display: none;*/
 	position: fixed;
 	top: 0px;
@@ -177,19 +177,19 @@ img[zoom] {
 	transition:opacity 0.2s ease-in-out;
 }
 
-#slides-lightbox-bg.open {
+#hippo-lightbox-bg.open {
 	opacity: 1;
 	display: block;
 	pointer-events: all;
 	max-height: 100vh;
 }
 
-#slides-lightbox-bg:not(.loaded) #slides-centering {
+#hippo-lightbox-bg:not(.loaded) #hippo-centering {
 	opacity:0;
 	pointer-events: none;
 }
 
-#slides-centering {
+#hippo-centering {
 	display: block;
 	vertical-align: middle;
 	width: 100%;
@@ -201,22 +201,22 @@ img[zoom] {
 	transition:opacity 0.2s ease-in-out;
 }
 
-#slides-caption-responsive {
+#hippo-caption-responsive {
 	display:none;
 }
 
 @media screen and (max-width:850px) {
-	#slides-caption {
+	#hippo-caption {
 		display:none;
 	}
 
-	#slides-caption-responsive {
+	#hippo-caption-responsive {
 		display:block;
 		padding-top: 15px;
 		padding-bottom: 6px;
 	}
 
-	#slides-controls {
+	#hippo-controls {
 		left:2vw;
 		right:2vw;
 	}
@@ -226,7 +226,7 @@ img[zoom] {
 	 * so it's safe to always scroll when possible
 	 * It also makes turning the screen and keeping the functionality possible
 	 */
-	#slides-img-container {
+	#hippo-img-container {
 		overflow-y: auto;
 	}
 
@@ -235,7 +235,7 @@ img[zoom] {
 	 * the popup window to exactly the size of the window which makes the transition in height obsolete
 	 * It also makes turning the screen and keeping the functionality possible
 	 */
-	#slides-img-height {
+	#hippo-img-height {
 		height: auto !important; /* !important, because the script added the height property per inline style */
 	}
 }
@@ -247,22 +247,22 @@ img[zoom] {
  * disabled again at some point
  */
 @media screen and (max-width:890px) {
-	#slides-controls, #slides-img-container {
+	#hippo-controls, #hippo-img-container {
 		width: auto;
 	}
 	
-	#slides-caption {
+	#hippo-caption {
 		width: auto;
 	}
 }
 
 
 @media screen and (min-height:775px) {
-	#slides-img-container img {
+	#hippo-img-container img {
 		padding-bottom:0px;
 	}
 
-	#slides-img-container {
+	#hippo-img-container {
 		bottom:auto;
 		/*max-height: 80vh;*/
 	}
@@ -270,7 +270,7 @@ img[zoom] {
 
 
 @media screen and (max-height:774px) {
-	#slides-img-container {
+	#hippo-img-container {
 		max-height: none !important;
 	}
 }
