@@ -13,9 +13,9 @@ the source files are in the folder "src"
     <link rel="stylesheet" href="slideshow.css" type="text/css">
     <script src="slideshow.js"></script>  
 
-    <img category="category" zoom="pic1.jpg" src="preview1.jpeg" caption="caption1"/>
-    <img category="category" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
-    <img caption="caption3" zoom="pic3.jpg" alt="click here"/>
+    <img category="category1" zoom="pic1.jpg" src="preview1.jpeg" caption="caption1"/>
+    <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
+    <img category="category2" caption="caption3" zoom="pic3.jpg" alt="click here"/>
 
 # live example
 
