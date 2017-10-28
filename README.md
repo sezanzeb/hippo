@@ -1,5 +1,8 @@
-# Another-Slideshow-Script
-Responsive &amp; does not depend on any additional library. The img tags don't need to be in the same container.
+# Hippo
+
+<img src="http://vanilla-js.com/assets/button.png">
+
+Responsive, flat designed &amp; does not depend on any additional library. The img tags don't need to be in the same container.
 
 # usage
 
@@ -17,3 +20,5 @@ the source files are in the folder "src"
 # live example
 
 http://hip70890b.de/web.php#Lightbox
+
+called Hippo, because I use it on my website "**Hip**70890b.de
