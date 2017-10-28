@@ -9,8 +9,9 @@
 - Supports IE9
 - Link two files, add an attribute to your img tag, done.
 
+<br/>
 
-# minimal working example
+## minimal working example
 
 You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/master/src
 
@@ -19,8 +20,9 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
 
     <img zoom="full.jpg" src="thumbnail.jpg"/>
 
+<br/>
 
-# captions and categories
+## captions and categories
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
@@ -29,7 +31,8 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
     <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
     <img category="category2" caption="caption3" zoom="pic3.jpg" alt="click here"/>
 
+<br/>
 
-# live example
+## live example
 
 http://hip70890b.de/web.php#Hippo
