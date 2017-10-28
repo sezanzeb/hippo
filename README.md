@@ -12,18 +12,15 @@ latest stable: https://github.com/sezanzeb/Hippo/releases/tag/1.0
 - Supports IE9
 - Link two files, add an attribute to your img tag, done.
 
-<br/>
-
-<br/>
 
 ## Live Example
 
 http://hip70890b.de/web.php#Hippo
 
 
-<br/>
+## How To
 
-## Minimal Working Example
+#### Minimal Working Example
 
 You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/master/src
 
@@ -32,7 +29,7 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
 
     <img zoom="full.jpg" src="thumbnail.jpg"/>
 
-## Captions and Categories
+#### Captions and Categories
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
@@ -41,8 +38,11 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
     <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
     <img category="category2" caption="caption3" zoom="pic3.jpg" alt="click here"/>
 
-## Dom Elements Instead of Images
+#### Dom Elements Instead of Images
 
+    <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
+    <script src="hippo-gallery.js"></script>
+    
     <div class="hippo-zoomContent" category="examplegroup" caption='"text"'/>
 
         <p>Click me</p>
@@ -50,13 +50,15 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
         <span>bar</span>
 
         <div class="hippo-zoomContent-content">
-            <p>Your content goes here, into the div with the class called .hippo-zoomContent-content, which is a child of .hippo-zoomContent</p>
+            <p>
+                Your content goes here, into the div with the class called .hippo-zoomContent-content,
+                which is a child of .hippo-zoomContent
+            </p>
         </div>
 
     </div>
 
-<br/>
 
-## TODO
+## ToDo
 
 - support closing using the esc-key and navigating by using arrow keys
