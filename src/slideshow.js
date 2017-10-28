@@ -16,8 +16,8 @@ window.addEventListener("load", function(e) {
 				'<div id="slides-img-container" style="max-height:'+imgContainerHeight+'vh; border-top-width:'+(controlHeight-1)+'px">'+
 					'<div id="slides-img-height">'+
 						'<img id="slides-img" src=""/>'+
+						'<div id="slides-caption-responsive"></div>'+
 					'</div>'+
-					'<div id="slides-caption-responsive"></div>'+
 				'</div>'+
 			'</div>'+
 		'</div>')
@@ -209,6 +209,9 @@ function zoomIn(elem) {
 				//the following controlls the scrollbar. fixes some issues compared to "auto" because
 				//the scrollbar can be displayed even though the height is still transitioning
 				//this needs to be the same number as in the .css file. search for 80 in there
+				var height = img.offsetHeight + getElemById("slides-caption-responsive").offsetHeight
+				console.log(img.offsetHeight,height,getElemById("slides-caption-responsive").offsetHeight)
+				
 				if(img.offsetHeight > (window.innerHeight * imgContainerHeight / 100.0 - controlHeight))
 					addClass(getElemById("slides-img-container"),"tallImage")
 				else
@@ -218,8 +221,8 @@ function zoomIn(elem) {
 				addClass(getElemById("slides-lightbox-bg"),"loaded")
 				addClass(getElemById("slides-loading"),"slides-noopacity")
 
-				var imgHeight = getElemById("slides-img-height")
-				imgHeight.style.height = img.offsetHeight + "px"
+				var imgHeightElement = getElemById("slides-img-height")
+				imgHeightElement.style.height = height + "px"
 				removeClass(getElemById("slides-img-height"),"opacity0")
 			},100)
 		}

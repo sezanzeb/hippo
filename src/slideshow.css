@@ -14,8 +14,7 @@
 	transition:opacity 1s ease-in;
 }
 
-#slides-lightbox-bg *
-{
+#slides-lightbox-bg * {
 	font-family: sans-serif;
 	color:white;
 }
@@ -49,7 +48,7 @@
 	top: 2vw;
 
 	max-width: 850px;
-	width: 850px;
+	width: 850px; /* IE needs a set width, so that this can be centered. This is going to be disabled using responsive rules later */
 	background: #182535;
 }
 
@@ -108,7 +107,7 @@
 	left: 0px;
 	right: 0px;
 	max-width: 500px;
-	width: 500px;
+	width: 500px; /* IE needs a set width, so that this can be centered. This is going to be disabled using responsive rules later */
 	line-height: 60px;
 	pointer-events: none;
 	z-index: 550;
@@ -202,27 +201,42 @@ img[zoom] {
 	transition:opacity 0.2s ease-in-out;
 }
 
-#slides-caption-responsive
-{
+#slides-caption-responsive {
 	display:none;
 }
 
 @media screen and (max-width:850px) {
-	#slides-caption
-	{
+	#slides-caption {
 		display:none;
 	}
 
-	#slides-caption-responsive
-	{
+	#slides-caption-responsive {
 		display:block;
-		margin-bottom:20px;
+		padding-top: 15px;
+		padding-bottom: 6px;
 	}
 
-	#slides-controls
-	{
+	#slides-controls {
 		left:2vw;
 		right:2vw;
+	}
+
+	/**
+	 * on the mobile, there are no scrollbars that move content to the left because of their width 
+	 * so it's safe to always scroll when possible
+	 * It also makes turning the screen and keeping the functionality possible
+	 */
+	#slides-img-container {
+		overflow-y: auto;
+	}
+
+	/**
+	 * on the mobile the transitioning heights are not as critical as on the desktop, because I set
+	 * the popup window to exactly the size of the window which makes the transition in height obsolete
+	 * It also makes turning the screen and keeping the functionality possible
+	 */
+	#slides-img-height {
+		height: auto !important; /* !important, because the script added the height property per inline style */
 	}
 }
 
