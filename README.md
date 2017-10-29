@@ -40,6 +40,8 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
 
 #### Dom Elements Instead of Images
 
+<sub>Unstable</sub>
+
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
     
