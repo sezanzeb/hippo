@@ -15,8 +15,8 @@ window.addEventListener("load", function(e) {
 					'<span id="hippo-next" class="hippo-hidden"></span>'+
 					'<span id="hippo-nextOff" class="hippo-hidden" style="opacity:0.3;"></span>'+
 				'</div>'+
-				'<div id="hippo-caption"></div>'+
-				'<div id="hippo-img-container" style="max-height:'+imgContainerHeight+'vh; border-top-width:'+(controlHeight-1)+'px">'+
+				'<div id="hippo-caption"></div>'+ // imgContainerHeight+2 to allow more room for captions that move to the bottom in responsive mode
+				'<div id="hippo-img-container" style="max-height:'+(imgContainerHeight+2)+'vh; border-top-width:'+(controlHeight-1)+'px">'+
 					'<div id="hippo-img-height">'+
 						'<div id="hippo-div"></div>'+
 						'<img id="hippo-img" src=""/>'+
@@ -40,6 +40,23 @@ window.addEventListener("load", function(e) {
 			}, 15)
 		})
 	}
+
+	window.addEventListener("keydown", function(e) {
+		var code = e.keyCode
+
+		// esc key close listener
+		if(code == 27) {
+			close()
+		}
+
+		// arrow key listener
+		if(code == 37) {
+			getElemById("hippo-previous").dispatchEvent(new window.Event("click"))
+		}
+		if(code == 39) {
+			getElemById("hippo-next").dispatchEvent(new window.Event("click"))
+		}
+	})
 
 	// if the button is Off, don't put an listener on it
 	// prevent closing the slideshow onclick on Off buttons
@@ -66,8 +83,8 @@ function load(event) {
 	// The event will only stop once the function terminates, or when manually stopping it
 	event.stopPropagation()
 	// those params are stored inside the button (the event target) in activateButton
-	dir = event.target.par1
-	elem = event.target.par2
+	dir = event.target.dirString
+	elem = event.target.nextImage
 	// disable listeners. Listeners are going to be created from scratch
 	getElemById("hippo-lightbox-bg").removeEventListener("click", close)
 	getElemById(dir).removeEventListener("click", load)
@@ -81,7 +98,7 @@ function load(event) {
  * going to be called to take care of the Buttons. Called within handlegroup
  *
  * @param dir		string, either "hippo-previous" or "hippo-next"
- * @param elem	dom element of the next <img> tag inside the website-content
+ * @param elem		dom element of the next <img> tag inside the website-content
  * @param img		the img tag that was clicked on the website content
  */
 function activateButton(dir, elem, img) {
@@ -92,8 +109,8 @@ function activateButton(dir, elem, img) {
 
 	var dirButton = getElemById(dir)
 	// parameters need to be passed like this, because otherwise removeEventListener won't work
-	dirButton.par1 = dir	// either "hippo-previous" or "hippo-next", to be stored inside the button as parameter
-	dirButton.par2 = elem // so that the event on the dirbutton knows which image to load next
+	dirButton.dirString = dir	// either "hippo-previous" or "hippo-next", to be stored inside the button as parameter
+	dirButton.nextImage = elem // so that the event on the dirbutton knows which image to load next
 
 	dirButton.addEventListener("click", load)
 

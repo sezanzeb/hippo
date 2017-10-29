@@ -59,8 +59,3 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
         </div>
 
     </div>
-
-
-## ToDo
-
-- support closing using the esc-key and navigating by using arrow keys
