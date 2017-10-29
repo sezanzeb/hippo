@@ -6,6 +6,22 @@
 	display: none;
 }
 
+#hippo-close-lightbox-button {
+	cursor: pointer;
+    color: rgba(255,255,255,1);
+    position: fixed;
+    bottom: 2vh;
+    left: 3vh;
+    line-height: 15px;
+    z-index: 150;
+    transition: border-color 0.1s ease-in-out;
+    border-bottom: 1px solid transparent;
+}
+
+#hippo-close-lightbox-button:hover {
+	border-bottom: 1px solid rgba(255,255,255,1);
+}
+
 #hippo-loading {
 	margin: 0px auto;
 	vertical-align: middle;
@@ -14,7 +30,7 @@
 	top: 30%;
 	left: 0px;
 	right: 0px;
-	z-index: 200;
+	z-index: 110;
 	padding-top: 40px;
 	display: block;
 	opacity: 1;
@@ -27,6 +43,7 @@
 #hippo-nextOff,
 #hippo-next,
 #hippo-caption,
+#hippo-responsive-close-button,
 #hippo-caption-responsive {
 	font-family: sans-serif;
 	color: white;
@@ -41,7 +58,7 @@
 	margin: 0px auto;
 	/* padding-bottom: 4vw;*/
 	width: 100%;
-	z-index: 400;
+	z-index: 120;
 	position: relative;
 	display: block;
 }
@@ -50,6 +67,7 @@
 	border: 0px solid #182535;
 	border-bottom-width: 15px;
 	overflow: hidden;
+	/* 200ms, just like the transition in handleNewContents */
 	transition: height 0.2s ease-in-out, opacity 0.1s ease-in-out;
 }
 
@@ -63,11 +81,12 @@
 	/* top and bottom are also vw, so that the distance is the same on all screen edges*/
 	left: 2vw;
 	right: 2vw;
-	bottom: 2vw;
 	top: 2vw;
 
 	max-width: 850px;
 	width: 850px; /* IE needs a set width, so that this can be centered. This is going to be disabled using responsive rules later */
+
+	overflow-x: hidden;
 }
 
 #hippo-caption-responsive,
@@ -107,28 +126,41 @@
 #hippo-controls {
 	/* height: 60px;*/ /* now configured in the .js file*/
 	padding: 10px 0px;
-	z-index: 500;
+	z-index: 130;
 	/* bottom: 0px;
 	left: 6vw;
 	right: 6vw;
 	max-width: 850px;*/
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
+
+	overflow: hidden;
 }
 
 #hippo-controls #hippo-previous,
 #hippo-controls #hippo-previousOff,
 #hippo-controls #hippo-next,
-#hippo-controls #hippo-nextOff {
-	padding: 10px 6%;
+#hippo-controls #hippo-nextOff,
+#hippo-responsive-close-button {
 	display: inline-block;
-	width: 40px;
 	vertical-align: top;
 	margin-bottom: -10px;
 	top: -1px;
 	font-size: 15px;
 	line-height: 42px;
 	position: absolute;
+
+	padding: 10px 6%;
+	width: 40px;
+}
+
+
+#hippo-responsive-close-button {
+	display: none;
+	padding: 10px 0%;
+	width: 60px;
+	opacity: 0.3;
+	margin-left: -30px;
 }
 
 #hippo-caption {
@@ -141,7 +173,7 @@
 	width: 500px; /* IE needs a set width, so that this can be centered. This is going to be disabled using responsive rules later */
 	line-height: 60px;
 	pointer-events: none;
-	z-index: 550;
+	z-index: 140;
 }
 
 #hippo-controls #hippo-previous,
@@ -237,7 +269,7 @@ img[zoom] {
 }
 
 #hippo-div {
-	cursor: default;
+	cursor: auto;
 	padding: 2vw;
 	text-align: left;
 }
@@ -247,7 +279,7 @@ img[zoom] {
 	display: none;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1030px) {
 	#hippo-caption {
 		display: none;
 	}
@@ -256,8 +288,11 @@ img[zoom] {
 		display: block;
 		padding-top: 18px;
 		padding-bottom: 4px;
+		padding-left: 25px;
 	}
+}
 
+@media screen and (max-width: 850px) {
 	#hippo-controls {
 		left: 2vw;
 		right: 2vw;
@@ -298,7 +333,27 @@ img[zoom] {
 	}
 }
 
+/**
+ * Hide the close-button (which is basically just a dummy, you can click anywhere on the bg around the lightbox to close) 
+ * if the screen is so small that the text would intersect the lightbox
+ */
+@media screen and (max-width: 1030px) and (max-height: 775px) {
+	#hippo-close-lightbox-button {
+		display: none;
+	}
 
+	/**
+	 * Show an alternative close button
+	 */
+	 #hippo-responsive-close-button {
+		display: inline-block;
+	}
+}
+
+
+/**
+ * on larger screens than 775px width, don't extend the lightbox to the bottom of the screen
+ */
 @media screen and (min-height: 775px) {
 	#hippo-img-container img {
 		padding-bottom: 0px;
@@ -310,9 +365,24 @@ img[zoom] {
 	}
 }
 
-
+/**
+ * on small screens, extend the lightbox to the bottom of the screen
+ */
 @media screen and (max-height: 774px) {
 	#hippo-img-container {
 		max-height: none !important;
+		bottom: 2vw;
+	}
+}
+
+
+/**
+ * make text smaller if screen is very small. Because of the smaller text the close button has to be relocated a little bit
+ */
+@media screen and (max-width: 400px) {
+	#hippo-caption-responsive,
+	#hippo-controls #hippo-previous, #hippo-controls #hippo-previousOff, #hippo-controls #hippo-next, #hippo-controls #hippo-nextOff,
+	#hippo-responsive-close-button {
+		font-size: 13px;
 	}
 }

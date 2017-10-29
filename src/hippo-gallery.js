@@ -5,11 +5,13 @@ var currentHeight = 0 // stores the height of #hippo-img-height
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
 		'<div style="display:none" id="hippo-lightbox-bg">'+
+			'<div id="hippo-close-lightbox-button">close</div>'+
 			'<div id="hippo-loading" class="hippo-noopacity">loading...<br/>click to close</div>'+
 			'<div id="hippo-centering">'+
 				'<div id="hippo-controls" style="height:'+controlHeight+'px">'+
 					'<span id="hippo-previousOff" class="hippo-hidden" style="opacity:0.3;"></span>'+
 					'<span id="hippo-previous" class="hippo-hidden"></span>'+
+					'<span id="hippo-responsive-close-button">close</span>'+
 					'<span id="hippo-next" class="hippo-hidden"></span>'+
 					'<span id="hippo-nextOff" class="hippo-hidden" style="opacity:0.3;"></span>'+
 				'</div>'+
@@ -30,7 +32,7 @@ window.addEventListener("load", function(e) {
 	{
 		elems[i].addEventListener("click", function(e) {
 			getElemById("hippo-lightbox-bg").style.display = ""
-			// some timeout so that the transition will be triggered.
+			// some timeout so that the transition in opacity will be triggered.
 			// because of the previous display:none it would be prevented by default.
 			var target = this
 			window.setTimeout(function() {
@@ -106,20 +108,23 @@ function close() {
 	addClass(getElemById("hippo-loading"), "hippo-noopacity")
 
 	getElemById("hippo-lightbox-bg").className = ""
-	
-	// keep hippo-tallImage eventually so that during the closing-transition the scrollbar does not disappear
-	removeClass(getElemById("hippo-img-container"), "loaded")
 
-	getElemById("hippo-img-height").style = ""
-	getElemById("hippo-img").style = ""
+	// reset so that next time the opening box will not transition in height
+	// without this line, after e.g. closing a tall whitebox and opening a small one
+	// the height would transition from the previous (closed by now) lightbox
+	// to the current one. The first opening transition should only transition in opacity though
+	currentHeight = 0
 	
-	//  reset after smooth transition
+	// reset after smooth closing-transition
 	window.setTimeout(function() {
+		
+		getElemById("hippo-img-height").style = ""
+		getElemById("hippo-img").style = ""
 		getElemById("hippo-img-container").className = ""
 		getElemById("hippo-div").innerHTML = ""
 		getElemById("hippo-lightbox-bg").style.display = "none"
 		getElemById("hippo-img").src = ""
-	}, 200) /* as much timeout as transition duration in the css */
+	}, 200) /* as much timeout as transition duration in the css of #hippo-lightbox-bg */
 }
 
 
@@ -201,7 +206,8 @@ function showLoadingIndicator() {
 function zoomIn(elem) {
 
 	// restore the current height. It is replaced by "auto" once the transition if over, so that resizing the browser window will not break the lightbox
-	getElemById("hippo-img-height").style.height = currentHeight + "px"
+	if(currentHeight != 0)
+		getElemById("hippo-img-height").style.height = currentHeight + "px"
 
 	// height transition will start from scratch
 	removeClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
@@ -226,6 +232,9 @@ function zoomIn(elem) {
 	
 	// first hide the old content, trigger transition of opacity down to 0
 	addClass(getElemById("hippo-img-height"), "hippo-opacity0")
+	
+	// the duration of the transition of #hippo-img-height for the opacity
+	var hippoImgHeightOpacityTransitionDuration = 100
 		
 	// if zoom getAttribute exists
 	if(elem.tagName == "IMG" && zoomedSrc !== false && zoomedSrc != "" && typeof zoomedSrc !== typeof undefined) {
@@ -246,7 +255,7 @@ function zoomIn(elem) {
 				
 				// hide the div, now it's img's turn
 				getElemById("hippo-div").innerHTML = ""
-			}, 100)
+			}, hippoImgHeightOpacityTransitionDuration)
 		}
 		
 		// start loading
@@ -263,7 +272,7 @@ function zoomIn(elem) {
 			
 			// hide the img, now it's div's turn
 			getElemById("hippo-img").src = ""
-		}, 100)
+		}, hippoImgHeightOpacityTransitionDuration)
 	}
 	else {
 		throw new Error("zoom getAttribute missing or empty")
@@ -330,7 +339,8 @@ function handleNewContents(elem) {
 	// this will trigger a transition for the opacity from 0 to 1
 	removeClass(getElemById("hippo-img-height"), "hippo-opacity0")
 
-	// after the transition use overflow-y auto, now it is safe to use
+	
+	// after the transition of #hippo-img-height use overflow-y auto, now it is safe to use
 	window.setTimeout(function() {
 		// the following class adds overflow-y: auto
 		addClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
