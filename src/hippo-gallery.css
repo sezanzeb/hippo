@@ -93,10 +93,15 @@
 	overflow-y: hidden;
 }
 
+
 /* why not overflow-y: auto? Because this tool transitions the heights, which means that with the setting to auto
  * the scrollbar might appear and disappear during the transition which results in ugly jumps */
-#hippo-img-container.tallImage {
+#hippo-img-container.hippo-tallImage {
 	overflow-y: scroll;
+}
+
+#hippo-img-container.hippo-heightTransitionHasFinished {
+	overflow-y: auto;
 }
 
 #hippo-controls {
@@ -166,7 +171,7 @@
 	cursor: default;
 }
 
-.opacity0 {
+.hippo-opacity0 {
 	opacity: 0;
 }
 

@@ -1,5 +1,6 @@
 var controlHeight = 60 // px
-var imgContainerHeight = 80 // % vh
+var imgContainerHeight = 80 // % vh // the initival value of this is going to be the max-height of #hippo-img-container
+var currentHeight = 0 // stores the height of #hippo-img-height
 
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
@@ -103,15 +104,18 @@ function activateButton(dir, elem, img) {
  */
 function close() {
 	addClass(getElemById("hippo-loading"), "hippo-noopacity")
-	removeClass(getElemById("hippo-lightbox-bg"), "loaded")
-	removeClass(getElemById("hippo-lightbox-bg"), "category")
-	removeClass(getElemById("hippo-lightbox-bg"), "open")
+
+	getElemById("hippo-lightbox-bg").className = ""
+	
+	// keep hippo-tallImage eventually so that during the closing-transition the scrollbar does not disappear
 	removeClass(getElemById("hippo-img-container"), "loaded")
+
 	getElemById("hippo-img-height").style = ""
 	getElemById("hippo-img").style = ""
 	
 	//  reset after smooth transition
 	window.setTimeout(function() {
+		getElemById("hippo-img-container").className = ""
 		getElemById("hippo-div").innerHTML = ""
 		getElemById("hippo-lightbox-bg").style.display = "none"
 		getElemById("hippo-img").src = ""
@@ -196,6 +200,12 @@ function showLoadingIndicator() {
  */
 function zoomIn(elem) {
 
+	// restore the current height. It is replaced by "auto" once the transition if over, so that resizing the browser window will not break the lightbox
+	getElemById("hippo-img-height").style.height = currentHeight + "px"
+
+	// height transition will start from scratch
+	removeClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
+
 	// close preview. This has to be done at the beginning, otherwise the lightbox might not close on errors
 	getElemById("hippo-lightbox-bg").addEventListener("click", close)
 
@@ -214,8 +224,8 @@ function zoomIn(elem) {
 	getElemById("hippo-caption").innerHTML = elem.getAttribute("caption")
 	getElemById("hippo-caption-responsive").innerHTML = elem.getAttribute("caption")
 	
-	// first hide the old content, trigger transition
-	addClass(getElemById("hippo-img-height"), "opacity0")
+	// first hide the old content, trigger transition of opacity down to 0
+	addClass(getElemById("hippo-img-height"), "hippo-opacity0")
 		
 	// if zoom getAttribute exists
 	if(elem.tagName == "IMG" && zoomedSrc !== false && zoomedSrc != "" && typeof zoomedSrc !== typeof undefined) {
@@ -283,27 +293,29 @@ function zoomIn(elem) {
  * @param {object} elem an image tag or a div. either #hippo-img or #hippo-div
  */
 function handleNewContents(elem) {
+
 	// the following controlls the scrollbar. fixes some issues compared to "auto" because
 	// the scrollbar can be displayed even though the height is still transitioning
 	// this needs to be the same number as in the .css file. search for 80 in there
 
 	// though adding classes and changing heights based on javascript measurements is very unflexible
 	// compared to a pure css solution, which is not available in this case.
+	console.log(elem.offsetHeight, (window.innerHeight * (imgContainerHeight) / 100.0 - controlHeight))
 	if(elem.offsetHeight > (window.innerHeight * imgContainerHeight / 100.0 - controlHeight)) {
-		addClass(getElemById("hippo-img-container"), "tallImage")
+		addClass(getElemById("hippo-img-container"), "hippo-tallImage")
 	}
 	else {
-		removeClass(getElemById("hippo-img-container"), "tallImage")
+		removeClass(getElemById("hippo-img-container"), "hippo-tallImage")
 	}
 
-	// detect size here, as changing the class might have effect on the image height (it will if tallImage changes, because of the scrollbar)
+	// detect size here, as changing the class might have effect on the image height (it will if hippo-tallImage changes, because of the scrollbar)
 	// so the height measured here will be less tall than before. But that's fine, because the worst case is that in some rare cases a
 	// dead scrollbar is shown even though the image fits inside the box without scrolling
 
-	// one could check again for the size and decide to remove tallImage, now that the scrollbar shows, but in that case the effect would be vice
+	// one could check again for the size and decide to remove hippo-tallImage, now that the scrollbar shows, but in that case the effect would be vice
 	// versa: in some cases there would be the scrollbar missing. I could set it to "auto", but then the image would jump in width in some cases.
 
-	var height = elem.offsetHeight + getElemById("hippo-caption-responsive").offsetHeight - 1 // -1 to prevent a leaking row of pixels
+	currentHeight = elem.offsetHeight + getElemById("hippo-caption-responsive").offsetHeight - 1 // -1 to prevent a leaking row of pixels
 
 	// tell everything about the content being loaded
 	addClass(getElemById("hippo-img-container"), "loaded")
@@ -312,12 +324,20 @@ function handleNewContents(elem) {
 	// hide "loading" indicator
 	addClass(getElemById("hippo-loading"), "hippo-noopacity")
 
-	// this will trigger a transition
+	// this will trigger a transition for the height
 	var imgHeightElement = getElemById("hippo-img-height")
-	imgHeightElement.style.height = height + "px"
-	removeClass(getElemById("hippo-img-height"), "opacity0")
-}
+	imgHeightElement.style.height = currentHeight + "px"
+	// this will trigger a transition for the opacity from 0 to 1
+	removeClass(getElemById("hippo-img-height"), "hippo-opacity0")
 
+	// after the transition use overflow-y auto, now it is safe to use
+	window.setTimeout(function() {
+		// the following class adds overflow-y: auto
+		addClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
+		// the height attribute was only there to support transitions. Now to support resizing the browser window replace it with "auto".
+		getElemById("hippo-img-height").style.height = "auto"
+	}, 200)
+}
 
 
 
@@ -329,7 +349,8 @@ function handleNewContents(elem) {
  * @param {string} classString class to remove
  */
 function removeClass(elem, classString) {
-  elem.className = elem.className.replace(new RegExp('(?:^|\\s)'+ classString + '(?:\\s|$)'), '')
+	elem.className = elem.className.replace(new RegExp("(^|[^a-zA-Z0-9\\_\\-]|\\s)" + classString + "($|[^a-zA-Z0-9\\_\\-]|\\s)","g"),"$1$2")
+	elem.className = elem.className.trim()
 }
 
 /**
@@ -338,8 +359,10 @@ function removeClass(elem, classString) {
  * @param {string} classString class to remove
  */
 function addClass(elem, classString) {
-  if(!this.hasClass(elem, classString))
-	elem.className += (" "+classString)
+	if(!this.hasClass(elem, classString)) {
+		elem.className += (" "+classString)
+		elem.className = elem.className.trim()
+	}
 }
 
 /**
@@ -348,9 +371,9 @@ function addClass(elem, classString) {
  * @param {string} classString class to remove
  */
 function hasClass(elem, classString) {
-  if(elem.className.indexOf(classString) != -1)
-  	return true
-  return false
+	if(elem.className.match(new RegExp("(^|[^a-zA-Z0-9\\_\\-]|\\s)" + classString + "($|[^a-zA-Z0-9\\_\\-]|\\s)")))
+		return true
+	return false
 }
 
 /**
@@ -359,9 +382,9 @@ function hasClass(elem, classString) {
  * @param {string} classString class to toggle
  */
 function toggleClass(elem, classString) {
-  if(this.hasClass(elem, classString))
-  	this.removeClass(elem, classString)
-  else this.addClass(elem, classString)
+	if(this.hasClass(elem, classString))
+		this.removeClass(elem, classString)
+	else this.addClass(elem, classString)
 }
 
 /**
