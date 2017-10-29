@@ -144,6 +144,10 @@ function close() {
 		getElemById("hippo-lightbox-bg").style.display = "none"
 		getElemById("hippo-img").src = ""
 	}, 200) /* as much timeout as transition duration in the css of #hippo-lightbox-bg */
+
+	// remove the event listeners, they point to images that are not opened anymore
+	getElemById("hippo-next").removeEventListener("click", load)
+	getElemById("hippo-previous").removeEventListener("click", load)
 }
 
 

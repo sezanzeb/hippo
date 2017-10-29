@@ -20,9 +20,9 @@ http://hip70890b.de/web.php#Hippo
 
 ## How To
 
-#### Minimal Working Example
-
 You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/master/src
+
+#### Minimal Working Example
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script> 
@@ -61,6 +61,8 @@ style it the way you like using the following css:
 
 #### Dom Elements Instead of Images
 
+Displays text, tables, anything that fits into the div "hippo-zoomContent-content" as shown below inside the lightbox.
+
 <sub>IE9 support yet unclear</sub>
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
@@ -83,6 +85,8 @@ style it the way you like using the following css:
 
 
 #### Any DOM Element as a Thumbnail is Supported
+
+Creates a clickable div that opens the lightbox and shows an image
 
 <sub>IE9 support yet unclear</sub>
 
