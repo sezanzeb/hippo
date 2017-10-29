@@ -2,7 +2,7 @@
 
 <img src="http://vanilla-js.com/assets/button.png">
 
-latest stable: https://github.com/sezanzeb/Hippo/releases/tag/1.0
+latest stable that has IE9 support: https://github.com/sezanzeb/Hippo/releases/tag/1.0
 
 - Can display text and tags aswell as images
 - Responsive
@@ -29,6 +29,26 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
 
     <img zoom="full.jpg" src="thumbnail.jpg"/>
 
+
+#### Open By Clicking Text
+
+
+    <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
+    <script src="hippo-gallery.js"></script> 
+
+    <img zoom="full.jpg" alt="click here"/>
+
+
+style it the way you like using the following css:
+
+    img[zoom][alt]:not([src])
+    {
+        color: #ee3388;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+
 #### Captions and Categories
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
@@ -38,9 +58,10 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
     <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
     <img category="category2" caption="caption3" zoom="pic3.jpg" alt="click here"/>
 
+
 #### Dom Elements Instead of Images
 
-<sub>Unstable</sub>
+<sub>IE9 support yet unclear</sub>
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
@@ -59,3 +80,13 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
         </div>
 
     </div>
+
+
+#### Any DOM Element as a Thumbnail is Supported
+
+<sub>IE9 support yet unclear</sub>
+
+    <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
+    <script src="hippo-gallery.js"></script>
+    
+	<div category="examplegroup" zoom="full.jpg" caption="Foo Bar"/>this is a div that will open an image</div>

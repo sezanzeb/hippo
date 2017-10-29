@@ -8,11 +8,11 @@
 	<body>
 		<!-- they don't need to be in the same container, that's one of the reasons why i wrote this -->
 		<p><img category="examplegroup" zoom="pic2.jpeg" src="pic2.jpeg" caption='Picture One'/></p>
-		<p><img category="examplegroup" zoom="pic1.jpeg" alt='"pic1 (click)"' caption='Picture Two'/></p>
+		<p><img category="examplegroup" zoom="pic1.jpeg" alt="this is an image alt tag" caption='Picture Two'/></p>
 		<p><img category="examplegroup" zoom="pic3.jpeg" src="pic3.jpeg" caption='Picture Three'/></p>
 		<p>
 			<div class="hippo-zoomContent" category="examplegroup" caption='Text'/>
-				<p>Click me</p>
+				<p>this shows content instead of images</p>
 				<div class="hippo-zoomContent-content">
 					<h1>Hello World</h1>
 					<p>
@@ -83,6 +83,7 @@
 				</div>
 			</div>
 		</p>
+		<div category="examplegroup" zoom="pic2.jpeg" caption="Foo Bar"/>this is a div that will open an image</div>
 	</body>
 </hmtl>
 
@@ -95,7 +96,7 @@
 		color:#333;
 	}
 
-	img[zoom], .hippo-zoomContent
+	*[zoom], .hippo-zoomContent
 	{
 		width:400px;
 		margin: 0px auto;

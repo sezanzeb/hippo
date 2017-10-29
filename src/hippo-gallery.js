@@ -27,7 +27,7 @@ window.addEventListener("load", function(e) {
 		'</div>')
 
 	// zoom into picture listener
-	var elems = document.querySelectorAll("img[zoom], .hippo-zoomContent")
+	var elems = document.querySelectorAll("*[zoom], .hippo-zoomContent")
 	for(var i = 0;i < elems.length; i++)
 	{
 		elems[i].addEventListener("click", function(e) {
@@ -69,6 +69,9 @@ window.addEventListener("load", function(e) {
 	getElemById("hippo-div").addEventListener("click", function(e) {
 		e.stopPropagation()
 	})
+	
+	// onclick close listener
+	getElemById("hippo-lightbox-bg").addEventListener("click", close)
 })
 
 
@@ -86,7 +89,6 @@ function load(event) {
 	dir = event.target.dirString
 	elem = event.target.nextImage
 	// disable listeners. Listeners are going to be created from scratch
-	getElemById("hippo-lightbox-bg").removeEventListener("click", close)
 	getElemById(dir).removeEventListener("click", load)
 
 	zoomIn(elem)
@@ -160,7 +162,7 @@ function handlegroup(elem, category) {
 	var nextImg = false
 	var previousImg = false
 
-	var imagesList2 = document.querySelectorAll("img[category="+category+"], .hippo-zoomContent[category="+category+"]")
+	var imagesList2 = document.querySelectorAll("*[category="+category+"], .hippo-zoomContent[category="+category+"]")
 
 	// get next and prev from the 'images' array
 	for(var i = 0;i < imagesList2.length;i++)
@@ -217,8 +219,7 @@ function showLoadingIndicator() {
 
 /**
  * Either called by one of the buttons in load or by clicking on an image
- *
- * @param elem	the image dom element that is going to be displayed in the lightbox
+ * @param elem	the DOM element that is going to be displayed in the lightbox
  */
 function zoomIn(elem) {
 
@@ -228,9 +229,6 @@ function zoomIn(elem) {
 
 	// height transition will start from scratch
 	removeClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
-
-	// close preview. This has to be done at the beginning, otherwise the lightbox might not close on errors
-	getElemById("hippo-lightbox-bg").addEventListener("click", close)
 
 	// show that the image is loading
 	showLoadingIndicator()
@@ -244,6 +242,7 @@ function zoomIn(elem) {
 	// get address of the zoomedin picture from getAttributes
 	var zoomedSrc = elem.getAttribute("zoom")
 
+	// show the caption
 	getElemById("hippo-caption").innerHTML = elem.getAttribute("caption")
 	getElemById("hippo-caption-responsive").innerHTML = elem.getAttribute("caption")
 	
@@ -253,8 +252,18 @@ function zoomIn(elem) {
 	// the duration of the transition of #hippo-img-height for the opacity
 	var hippoImgHeightOpacityTransitionDuration = 100
 		
-	// if zoom getAttribute exists
-	if(elem.tagName == "IMG" && zoomedSrc !== false && zoomedSrc != "" && typeof zoomedSrc !== typeof undefined) {
+	// detect mode
+	var type
+	if(elem.getAttribute("zoom")) {
+		type = "IMG" // zooms in on an image
+	}
+	else {
+		type = "DIV" // displays DOM content
+		if(!elem.querySelector(".hippo-zoomContent-content"))
+			return console.error("The element",elem,"does not contain content to display and it does not have a zoom attribute. Take a look at the examples at https://github.com/sezanzeb/Hippo")
+	}
+
+	if(type == "IMG" && zoomedSrc !== false && zoomedSrc != "" && typeof zoomedSrc !== typeof undefined) {
 		//  load image
 	
 		// the following onload listener will add classes once it's loaded.
@@ -278,7 +287,7 @@ function zoomIn(elem) {
 		// start loading
 		preloadimg.src = zoomedSrc
 	}
-	else if(elem.tagName == "DIV") {
+	else if(type == "DIV") {
 		// timeout for css transitions
 		window.setTimeout(function() {
 			//  load div content
@@ -326,7 +335,6 @@ function handleNewContents(elem) {
 
 	// though adding classes and changing heights based on javascript measurements is very unflexible
 	// compared to a pure css solution, which is not available in this case.
-	console.log(elem.offsetHeight, (window.innerHeight * (imgContainerHeight) / 100.0 - controlHeight))
 	if(elem.offsetHeight > (window.innerHeight * imgContainerHeight / 100.0 - controlHeight)) {
 		addClass(getElemById("hippo-img-container"), "hippo-tallImage")
 	}

@@ -44,7 +44,8 @@
 #hippo-next,
 #hippo-caption,
 #hippo-responsive-close-button,
-#hippo-caption-responsive {
+#hippo-caption-responsive,
+#hippo-loading {
 	font-family: sans-serif;
 	color: white;
 }
@@ -216,7 +217,7 @@
 	transition: none !important;
 }
 
-img[zoom] {
+*[zoom] {
 	cursor: pointer;
 	border-radius: 2px;
 	position: relative;
