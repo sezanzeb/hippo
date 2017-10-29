@@ -1,25 +1,25 @@
 .hippo-zoomContent {
-	cursor:pointer;
+	cursor: pointer;
 }
 
 .hippo-zoomContent-content {
-	display:none;
+	display: none;
 }
 
 #hippo-loading {
 	margin: 0px auto;
 	vertical-align: middle;
-	text-align:center;
-	position:absolute;
-	top:30%;
-	left:0px;
-	right:0px;
-	z-index:200;
+	text-align: center;
+	position: absolute;
+	top: 30%;
+	left: 0px;
+	right: 0px;
+	z-index: 200;
 	padding-top: 40px;
-	display:block;
-	opacity:1;
+	display: block;
+	opacity: 1;
 	pointer-events: none;
-	transition:opacity 1s ease-in;
+	transition: opacity 1s ease-in;
 }
 
 #hippo-previousOff,
@@ -29,7 +29,7 @@
 #hippo-caption,
 #hippo-caption-responsive {
 	font-family: sans-serif;
-	color:white;
+	color: white;
 }
 
 #hippo-img-height {
@@ -39,18 +39,18 @@
 
 #hippo-img {
 	margin: 0px auto;
-	/*padding-bottom: 4vw;*/
-	width:100%;
-	z-index:400;
-	position:relative;
-	display:block;
+	/* padding-bottom: 4vw;*/
+	width: 100%;
+	z-index: 400;
+	position: relative;
+	display: block;
 }
 
 #hippo-img-height {
 	border: 0px solid #182535;
 	border-bottom-width: 15px;
-	overflow:hidden;
-	transition:height 0.2s ease-in-out, opacity 0.1s ease-in-out;
+	overflow: hidden;
+	transition: height 0.2s ease-in-out, opacity 0.1s ease-in-out;
 }
 
 #hippo-controls, #hippo-img-container {
@@ -59,8 +59,8 @@
 	position: absolute;
 	border-radius: 2px;
 
-	/*acts like "min distance from left, right and bottom" and "center horicontaly"*/
-	/*top and bottom are also vw, so that the distance is the same on all screen edges*/
+	/* acts like "min distance from left, right and bottom" and "center horicontaly"*/
+	/* top and bottom are also vw, so that the distance is the same on all screen edges*/
 	left: 2vw;
 	right: 2vw;
 	bottom: 2vw;
@@ -79,41 +79,43 @@
 #hippo-img-container {
 	box-shadow: 0px 3px 6px RGBa(0,0,0,0.4);
 	max-height: 100%;
-	padding:0px;
-	/*60-1 to prevent the 1px transparent slit that appears sometimes*/
+	padding: 0px;
+	/* 60-1 to prevent the 1px transparent slit that appears sometimes*/
 	border-top: 0px solid #182535;
-	box-sizing:border-box;
-	/*should have high radius, to prevent overlapping antialiasing from the controls and the img-container*/
-	border-top-left-radius:4px;
-	border-top-right-radius:4px;
+	box-sizing: border-box;
+	/* should have high radius, to prevent overlapping antialiasing from the controls and the img-container*/
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 
-	/*it's hidden because the javascript will imitate the 'auto' setting*/
-	/*this is done because then the scrollbar can be displayed while the height is still transitioning*/
-	/*which makes it more smooth because the image won't jump in size because of a suddenly appearing scrollbar*/
+	/* it's hidden because the javascript will imitate the 'auto' setting*/
+	/* this is done because then the scrollbar can be displayed while the height is still transitioning*/
+	/* which makes it more smooth because the image won't jump in size because of a suddenly appearing scrollbar*/
 	overflow-y: hidden;
 }
 
+/* why not overflow-y: auto? Because this tool transitions the heights, which means that with the setting to auto
+ * the scrollbar might appear and disappear during the transition which results in ugly jumps */
 #hippo-img-container.tallImage {
-	overflow-y:scroll;
+	overflow-y: scroll;
 }
 
 #hippo-controls {
-	/*height: 60px;*/ /*now configured in the .js file*/
+	/* height: 60px;*/ /* now configured in the .js file*/
 	padding: 10px 0px;
 	z-index: 500;
-	/*bottom: 0px;
+	/* bottom: 0px;
 	left: 6vw;
 	right: 6vw;
-	max-width:850px;*/
-	border-bottom-left-radius:0px;
-	border-bottom-right-radius:0px;
+	max-width: 850px;*/
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
 #hippo-controls #hippo-previous,
 #hippo-controls #hippo-previousOff,
 #hippo-controls #hippo-next,
 #hippo-controls #hippo-nextOff {
-	padding:10px 6%;
+	padding: 10px 6%;
 	display: inline-block;
 	width: 40px;
 	vertical-align: top;
@@ -121,7 +123,7 @@
 	top: -1px;
 	font-size: 15px;
 	line-height: 42px;
-	position:absolute;
+	position: absolute;
 }
 
 #hippo-caption {
@@ -139,14 +141,14 @@
 
 #hippo-controls #hippo-previous,
 #hippo-controls #hippo-previousOff {
-	left:0px;
-	padding-left:20px;
+	left: 0px;
+	padding-left: 20px;
 }
 
 #hippo-controls #hippo-next,
 #hippo-controls #hippo-nextOff {
-	right:0px;
-	padding-right:20px;
+	right: 0px;
+	padding-right: 20px;
 }
 
 #hippo-controls #hippo-previous:before,
@@ -161,30 +163,30 @@
 
 #hippo-previousOff,
 #hippo-nextOff {
-	cursor:default;
+	cursor: default;
 }
 
 .opacity0 {
-	opacity:0;
+	opacity: 0;
 }
 
 .hippo-hidden {
-	display:none !important;
+	display: none !important;
 }
 
 .hippo-noopacity {
-	opacity:0 !important;
-	transition:none !important;
+	opacity: 0 !important;
+	transition: none !important;
 }
 
 img[zoom] {
-	cursor:pointer;
+	cursor: pointer;
 	border-radius: 2px;
-	position:relative;
+	position: relative;
 }
 
 #hippo-lightbox-bg {
-	/*display: none;*/
+	/* display: none;*/
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -198,7 +200,7 @@ img[zoom] {
 	max-width: 100vw !important;
 	right: auto !important;
 	width: 100vw !important;
-	transition:opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
 }
 
 #hippo-lightbox-bg.open {
@@ -209,7 +211,7 @@ img[zoom] {
 }
 
 #hippo-lightbox-bg:not(.loaded) #hippo-centering {
-	opacity:0;
+	opacity: 0;
 	pointer-events: none;
 }
 
@@ -222,11 +224,11 @@ img[zoom] {
 	max-width: 100vw;
 	margin: 0px auto;
 	position: relative;
-	transition:opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
 }
 
 #hippo-caption-responsive {
-	display:none;
+	display: none;
 }
 
 #hippo-div {
@@ -240,20 +242,20 @@ img[zoom] {
 	display: none;
 }
 
-@media screen and (max-width:850px) {
+@media screen and (max-width: 850px) {
 	#hippo-caption {
-		display:none;
+		display: none;
 	}
 
 	#hippo-caption-responsive {
-		display:block;
+		display: block;
 		padding-top: 18px;
 		padding-bottom: 4px;
 	}
 
 	#hippo-controls {
-		left:2vw;
-		right:2vw;
+		left: 2vw;
+		right: 2vw;
 	}
 
 	/**
@@ -277,11 +279,11 @@ img[zoom] {
 
 
 /**
- * IE needs the width to be set for centering by position:absolute.
+ * IE needs the width to be set for centering by position: absolute.
  * But a set width will make the page less responsive, that means it has do be
  * disabled again at some point
  */
-@media screen and (max-width:890px) {
+@media screen and (max-width: 890px) {
 	#hippo-controls, #hippo-img-container {
 		width: auto;
 	}
@@ -292,19 +294,19 @@ img[zoom] {
 }
 
 
-@media screen and (min-height:775px) {
+@media screen and (min-height: 775px) {
 	#hippo-img-container img {
-		padding-bottom:0px;
+		padding-bottom: 0px;
 	}
 
 	#hippo-img-container {
-		bottom:auto;
-		/*max-height: 80vh;*/
+		bottom: auto;
+		/* max-height: 80vh;*/
 	}
 }
 
 
-@media screen and (max-height:774px) {
+@media screen and (max-height: 774px) {
 	#hippo-img-container {
 		max-height: none !important;
 	}
