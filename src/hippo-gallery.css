@@ -297,16 +297,17 @@
 
 @media screen and (max-width: 850px) {
 
-	/* used to prevent scrolling on mobiles during the popup which makes it better to use and
-	 * it was meant to improve performance, which is really bad when scrolling on fixed divs
-	 * only works on desktop though. I'll keep it here just in case it will work some day */
-	body.hippo-scrollingDisabledOnMobile {
-		overflow: hidden;
-	}
-
 	#hippo-controls {
 		left: 2vw;
 		right: 2vw;
+	}
+
+
+	/* used to prevent scrolling on mobiles during the popup which makes it better to use and
+	* it was meant to improve performance, which is really bad when scrolling on fixed divs
+	* only works on desktop though. I'll keep it here just in case it will work some day */
+	body.hippo-scrollingDisabled {
+		overflow: hidden; /* only do this on mobile, on desktops the content will jump because of the hiding scrollbar */
 	}
 
 	/**

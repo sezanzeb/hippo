@@ -52,12 +52,25 @@ window.addEventListener("load", function(e) {
 			close()
 		}
 
+		var event
+
+		if(navigator.userAgent.match("Trident"))
+		{
+			// IE
+			event = document.createEvent("Event")
+			event.initEvent("click", false, true);
+		}
+		else
+		{
+			event = new window.Event("click")
+		}
+
 		// arrow key listener
 		if(code == 37) {
-			getElemById("hippo-previous").dispatchEvent(new window.Event("click"))
+			getElemById("hippo-previous").dispatchEvent(event)
 		}
 		if(code == 39) {
-			getElemById("hippo-next").dispatchEvent(new window.Event("click"))
+			getElemById("hippo-next").dispatchEvent(event)
 		}
 	})
 
@@ -79,7 +92,9 @@ window.addEventListener("load", function(e) {
 		if(hasClass(getElemById("hippo-lightbox-bg"),"loaded"))
 		{
 			e.preventDefault() // some people say this works to disable scrolling. Maybe it works in some rare browsers
-			window.scrollTo(currentScrollX, currentScrollY)
+			if(currentScrollY) // undefined on IE
+				window.scrollTo(currentScrollX, currentScrollY)
+			console.log(currentScrollX,currentScrollY)
 		}
 	})
 
@@ -164,7 +179,7 @@ function close() {
 	getElemById("hippo-next").removeEventListener("click", load)
 	getElemById("hippo-previous").removeEventListener("click", load)
 
-	removeClass(document.body, "hippo-scrollingDisabledOnMobile")
+	removeClass(document.body, "hippo-scrollingDisabled")
 }
 
 
@@ -247,7 +262,7 @@ function zoomIn(elem) {
 	currentScrollX = window.scrollX
 	currentScrollY = window.scrollY
 
-	addClass(document.body, "hippo-scrollingDisabledOnMobile")
+	addClass(document.body, "hippo-scrollingDisabled")
 
 	// restore the current height. It is replaced by "auto" once the transition if over, so that resizing the browser window will not break the lightbox
 	if(currentHeight != 0)
