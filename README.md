@@ -4,13 +4,13 @@
 
 latest stable that has IE9 support: https://github.com/sezanzeb/Hippo/releases/tag/1.0
 
-- Can display text and tags aswell as images
+- Besides displaying Images, it can also display regular HTML content 
 - Responsive
 - Flat Designed
 - No Dependencies
-- The img tags don't need to be in the same container.
+- The tags that belong to the same category don't need to be in the same container.
 - Supports IE9
-- Link two files, add an attribute to your img tag, done.
+- Link two files, add an attribute to your tag, done.
 
 <br/>
 
@@ -24,6 +24,8 @@ http://hip70890b.de/web.php#Hippo
 
 You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/master/src
 
+<br/>
+
 ### Minimal Working Example
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
@@ -33,8 +35,9 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
     
 Just take care of setting the href, zoom and src attributes according to your project
 
+<br/>
 
-### Open By Clicking Text
+### Open By Clicking on Text
 
 will display "click here" on your website. Clicking it will open an image (when the zoom attribute was set correctly)
 
@@ -53,6 +56,7 @@ style it the way you like using the following css:
         cursor: pointer;
     }
 
+<br/>
 
 ### Captions and Categories
 
@@ -65,8 +69,9 @@ Activates navigation using arrow keys or the buttons on the top left and top rig
     <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
     <img category="category2" caption="caption3" zoom="pic3.jpg" alt="click here"/>
 
+<br/>
 
-### Dom Elements Instead of Images
+### Displaying HTML Content Inside the Lightbox 
 
 Displays text, tables, anything that fits into the div "hippo-zoomContent-content" as shown below inside the lightbox.
 
@@ -90,8 +95,9 @@ Displays text, tables, anything that fits into the div "hippo-zoomContent-conten
 
     </div>
 
+<br/>
 
-#### Any DOM Element as a Thumbnail is Supported
+#### Click on a Div to Open an Image
 
 Creates a clickable div that opens the lightbox and shows an image
 
@@ -100,4 +106,4 @@ Creates a clickable div that opens the lightbox and shows an image
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
     
-	<div category="examplegroup" zoom="full.jpg" caption="Foo Bar"/>this is a div that will open an image</div>
+    <div category="examplegroup" zoom="full.jpg" caption="Foo Bar"/>this is a div that will open an image</div>
