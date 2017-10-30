@@ -1,6 +1,9 @@
 var controlHeight = 60 // px
 var imgContainerHeight = 80 // % vh // the initival value of this is going to be the max-height of #hippo-img-container
+
 var currentHeight = 0 // stores the height of #hippo-img-height
+var currentScrollX = 0
+var currentScrollY = 0
 
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
@@ -58,7 +61,7 @@ window.addEventListener("load", function(e) {
 		}
 	})
 
-	// if the button is Off, don't put an listener on it
+	// if the button is Off, don't put a listener on it
 	// prevent closing the slideshow onclick on Off buttons
 	getElemById("hippo-previousOff").addEventListener("click", function(e) {
 		e.stopPropagation()
@@ -70,6 +73,18 @@ window.addEventListener("load", function(e) {
 		e.stopPropagation()
 	})
 	
+
+	// scrolling on fixed divs on mobile is a pain. Using the following code it get's a little bit more bearable
+	window.addEventListener("scroll", function(e) {
+		if(hasClass(getElemById("hippo-lightbox-bg"),"loaded"))
+		{
+			e.preventDefault() // some people say this works to disable scrolling. Maybe it works in some rare browsers
+			window.scrollTo(currentScrollX, currentScrollY)
+		}
+	})
+
+
+
 	// onclick close listener
 	getElemById("hippo-lightbox-bg").addEventListener("click", close)
 })
@@ -148,6 +163,8 @@ function close() {
 	// remove the event listeners, they point to images that are not opened anymore
 	getElemById("hippo-next").removeEventListener("click", load)
 	getElemById("hippo-previous").removeEventListener("click", load)
+
+	removeClass(document.body, "hippo-scrollingDisabledOnMobile")
 }
 
 
@@ -226,6 +243,11 @@ function showLoadingIndicator() {
  * @param elem	the DOM element that is going to be displayed in the lightbox
  */
 function zoomIn(elem) {
+
+	currentScrollX = window.scrollX
+	currentScrollY = window.scrollY
+
+	addClass(document.body, "hippo-scrollingDisabledOnMobile")
 
 	// restore the current height. It is replaced by "auto" once the transition if over, so that resizing the browser window will not break the lightbox
 	if(currentHeight != 0)
