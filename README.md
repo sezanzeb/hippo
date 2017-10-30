@@ -2,8 +2,6 @@
 
 <img src="http://vanilla-js.com/assets/button.png">
 
-latest stable that has IE9 support: https://github.com/sezanzeb/Hippo/releases/tag/1.0
-
 - Besides displaying Images, it can also display regular HTML content 
 - Responsive
 - Flat Designed
@@ -75,8 +73,6 @@ Activates navigation using arrow keys or the buttons on the top left and top rig
 
 Displays text, tables, anything that fits into the div "hippo-zoomContent-content" as shown below inside the lightbox.
 
-<sub>IE9 support yet unclear</sub>
-
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
     
@@ -100,8 +96,6 @@ Displays text, tables, anything that fits into the div "hippo-zoomContent-conten
 #### Click on a Div to Open an Image
 
 Creates a clickable div that opens the lightbox and shows an image
-
-<sub>IE9 support yet unclear</sub>
 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script>
