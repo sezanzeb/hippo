@@ -35,9 +35,7 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
     
 Just take care of setting the href, zoom and src attributes according to your project
 
-<br/>
-
-### Open By Clicking on Text
+**the alt tag can be used to display e.g. "click here" instead of a thumbnail**
 
 will display "click here" on your website. Clicking it will open an image (when the zoom attribute was set correctly)
 
@@ -86,11 +84,12 @@ Displays text, tables, anything that fits into the div "hippo-zoomContent-conten
     
     <div class="hippo-zoomContent" category="examplegroup" caption='"text"'/>
 
-        <p>Click me</p>
-        <div>foo</div>
-        <span>bar</span>
+        <p>Click</p>
+        <div>me</div>
+        <span>foo</span>
 
         <div class="hippo-zoomContent-content">
+            <h1>bar</h1>
             <p>
                 Your content goes here, into the div with the class called .hippo-zoomContent-content,
                 which is a child of .hippo-zoomContent
@@ -102,7 +101,7 @@ Displays text, tables, anything that fits into the div "hippo-zoomContent-conten
 <br/>
 ```
 
-#### Click on a Div to Open an Image
+### Click on a Div to Open an Image
 
 Creates a clickable div that opens the lightbox and shows an image
 
