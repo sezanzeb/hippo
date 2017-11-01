@@ -87,14 +87,13 @@ window.addEventListener("load", function(e) {
 	})
 	
 
-	// scrolling on fixed divs on mobile is a pain. Using the following code it get's a little bit more bearable
+	// scrolling on fixed divs on mobile is a pain. The following code is an attempt to make it more bearable
 	window.addEventListener("scroll", function(e) {
 		if(hasClass(getElemById("hippo-lightbox-bg"),"loaded"))
 		{
 			e.preventDefault() // some people say this works to disable scrolling. Maybe it works in some rare browsers
 			if(currentScrollY) // undefined on IE
 				window.scrollTo(currentScrollX, currentScrollY)
-			console.log(currentScrollX,currentScrollY)
 		}
 	})
 
