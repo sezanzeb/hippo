@@ -225,7 +225,6 @@
 }
 
 #hippo-lightbox-bg {
-	/* display: none;*/
 	position: fixed;
 	-webkit-transform: translateZ(0);
 	top: 0px;

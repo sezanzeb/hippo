@@ -5,6 +5,8 @@ var currentHeight = 0 // stores the height of #hippo-img-height
 var currentScrollX = 0
 var currentScrollY = 0
 
+var hippo_active = false
+
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
 		'<div style="display:none" id="hippo-lightbox-bg">'+
@@ -34,6 +36,7 @@ window.addEventListener("load", function(e) {
 	for(var i = 0;i < elems.length; i++)
 	{
 		elems[i].addEventListener("click", function(e) {
+			hippo_active = true
 			getElemById("hippo-lightbox-bg").style.display = ""
 			// some timeout so that the transition in opacity will be triggered.
 			// because of the previous display:none it would be prevented by default.
@@ -89,14 +92,13 @@ window.addEventListener("load", function(e) {
 
 	// scrolling on fixed divs on mobile is a pain. The following code is an attempt to make it more bearable
 	window.addEventListener("scroll", function(e) {
-		if(hasClass(getElemById("hippo-lightbox-bg"),"loaded"))
+		if(hippo_active)
 		{
 			e.preventDefault() // some people say this works to disable scrolling. Maybe it works in some rare browsers
 			if(currentScrollY) // undefined on IE
 				window.scrollTo(currentScrollX, currentScrollY)
 		}
 	})
-
 
 
 	// onclick close listener
@@ -153,9 +155,12 @@ function activateButton(dir, elem, img) {
  * called on click on #hippo-lightbox-bg
  */
 function close() {
+
+	hippo_active = false
+
 	addClass(getElemById("hippo-loading"), "hippo-noopacity")
 
-	getElemById("hippo-lightbox-bg").className = ""
+	getElemById("hippo-lightbox-bg").removeAttribute("class")
 
 	// reset so that next time the opening box will not transition in height
 	// without this line, after e.g. closing a tall whitebox and opening a small one
@@ -165,10 +170,13 @@ function close() {
 	
 	// reset after smooth closing-transition
 	window.setTimeout(function() {
-		
+		// if during the timeout the state changed because
+		// of user input
+		if(hippo_active)
+			return
 		getElemById("hippo-img-height").style = ""
 		getElemById("hippo-img").style = ""
-		getElemById("hippo-img-container").className = ""
+		getElemById("hippo-img-container").removeAttribute("class")
 		getElemById("hippo-div").innerHTML = ""
 		getElemById("hippo-lightbox-bg").style.display = "none"
 		getElemById("hippo-img").src = ""
@@ -314,6 +322,8 @@ function zoomIn(elem) {
 		preloadimg.onload = function() {
 			// timeout for css transitions
 			window.setTimeout(function() {
+				if(!hippo_active)
+					return close()
 				// once the image is loaded:
 				img.src = zoomedSrc
 
@@ -330,6 +340,8 @@ function zoomIn(elem) {
 	else if(type == "DIV") {
 		// timeout for css transitions
 		window.setTimeout(function() {
+			if(!hippo_active)
+				return close()
 			//  load div content
 			var div = getElemById("hippo-div")
 			div.innerHTML = elem.querySelector(".hippo-zoomContent-content").innerHTML
@@ -424,8 +436,14 @@ function handleNewContents(elem) {
  * @param {string} classString class to remove
  */
 function removeClass(elem, classString) {
-	elem.className = elem.className.replace(new RegExp("(^|[^a-zA-Z0-9\\_\\-]|\\s)" + classString + "($|[^a-zA-Z0-9\\_\\-]|\\s)","g"),"$1$2")
+	elem.className = elem.className.replace(new RegExp(" " + classString + " "), " ")
+	elem.className = elem.className.replace(new RegExp("^" + classString + " "), " ")
+	elem.className = elem.className.replace(new RegExp("^" + classString + "$"), " ")
+	elem.className = elem.className.replace(new RegExp(" " + classString + "$"), " ")
+	elem.className = elem.className.replace("  ", " ")
 	elem.className = elem.className.trim()
+	if(elem.className === "")
+		elem.removeAttribute("class")
 }
 
 /**
