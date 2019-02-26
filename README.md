@@ -47,7 +47,7 @@ will display "click here" on your website. Clicking it will open an image (when 
 style it the way you like using the following css for example, to make it look like a clickable link:
 
 ```css
-    span
+    span[zoom]
     {
         color: #ee3388;
         text-decoration: underline;
