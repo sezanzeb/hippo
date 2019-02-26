@@ -41,13 +41,13 @@ will display "click here" on your website. Clicking it will open an image (when 
     <link rel="stylesheet" href="hippo-gallery.css" type="text/css">
     <script src="hippo-gallery.js"></script> 
 
-    <img zoom="full.jpg" alt="click here"/>
+    <span zoom="full.jpg">click here</span>
 ```
 
-style it the way you like using the following css:
+style it the way you like using the following css for example, to make it look like a clickable link:
 
 ```css
-    img[zoom][alt]:not([src])
+    span
     {
         color: #ee3388;
         text-decoration: underline;
@@ -67,7 +67,7 @@ Activates navigation using arrow keys or the buttons on the top left and top rig
 
     <img category="category1" zoom="pic1.jpg" src="preview1.jpeg" caption="caption1"/>
     <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
-    <img category="category2" caption="caption3" zoom="pic3.jpg" alt="click here"/>
+    <span category="category2" caption="caption3" zoom="pic3.jpg" zoom="full.jpg">click here</span>
 ```
 
 <br/>
