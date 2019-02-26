@@ -35,8 +35,6 @@ You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/m
     
 Just take care of setting the href, zoom and src attributes according to your project
 
-**the alt tag can be used to display e.g. "click here" instead of a thumbnail**
-
 will display "click here" on your website. Clicking it will open an image (when the zoom attribute was set correctly)
 
 ```html
