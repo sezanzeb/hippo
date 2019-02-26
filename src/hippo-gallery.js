@@ -1,3 +1,5 @@
+"use strict"
+
 var controlHeight = 60 // px
 var imgContainerHeight = 80 // % vh // the initival value of this is going to be the max-height of #hippo-img-container
 
@@ -6,6 +8,10 @@ var currentScrollX = 0
 var currentScrollY = 0
 
 var hippo_active = false
+
+var hippo_lightbox_bg_transitiontime = 200
+var hippo_img_height_transitiontime = 200
+var hippo_trigger_transition_timeout = 15
 
 window.addEventListener("load", function(e) {
 	document.body.innerHTML = (document.body.innerHTML +
@@ -42,8 +48,8 @@ window.addEventListener("load", function(e) {
 			// because of the previous display:none it would be prevented by default.
 			var target = this
 			window.setTimeout(function() {
-				zoomIn(target)
-			}, 15)
+				hippo_zoomIn(target)
+			}, hippo_trigger_transition_timeout)
 		})
 	}
 
@@ -52,7 +58,7 @@ window.addEventListener("load", function(e) {
 
 		// esc key close listener
 		if(code == 27) {
-			close()
+			hippo_close()
 		}
 
 		var event
@@ -102,7 +108,7 @@ window.addEventListener("load", function(e) {
 
 
 	// onclick close listener
-	getElemById("hippo-lightbox-bg").addEventListener("click", close)
+	getElemById("hippo-lightbox-bg").addEventListener("click", hippo_close)
 })
 
 
@@ -112,17 +118,17 @@ window.addEventListener("load", function(e) {
  *
  * @param event		the event object that the browser creates
  */
-function load(event) {
+function hippo_load(event) {
 	// to prevent the listener from closing the lightbox once it's opened.
 	// The event will only stop once the function terminates, or when manually stopping it
 	event.stopPropagation()
 	// those params are stored inside the button (the event target) in activateButton
-	dir = event.target.dirString
-	elem = event.target.nextImage
+	var dir = event.target.dirString
+	var elem = event.target.nextImage
 	// disable listeners. Listeners are going to be created from scratch
-	getElemById(dir).removeEventListener("click", load)
+	getElemById(dir).removeEventListener("click", hippo_load)
 
-	zoomIn(elem)
+	hippo_zoomIn(elem)
 }
 
 
@@ -134,7 +140,7 @@ function load(event) {
  * @param elem		dom element of the next <img> tag inside the website-content
  * @param img		the img tag that was clicked on the website content
  */
-function activateButton(dir, elem, img) {
+function hippo_activateButton(dir, elem, img) {
 
 	// adjust visibility
 	addClass(getElemById(dir+"Off"), "hippo-hidden")
@@ -145,7 +151,7 @@ function activateButton(dir, elem, img) {
 	dirButton.dirString = dir	// either "hippo-previous" or "hippo-next", to be stored inside the button as parameter
 	dirButton.nextImage = elem // so that the event on the dirbutton knows which image to load next
 
-	dirButton.addEventListener("click", load)
+	dirButton.addEventListener("click", hippo_load)
 
 }
 
@@ -154,7 +160,7 @@ function activateButton(dir, elem, img) {
 /**
  * called on click on #hippo-lightbox-bg
  */
-function close() {
+function hippo_close() {
 
 	hippo_active = false
 
@@ -180,11 +186,11 @@ function close() {
 		getElemById("hippo-div").innerHTML = ""
 		getElemById("hippo-lightbox-bg").style.display = "none"
 		getElemById("hippo-img").removeAttribute("src")
-	}, 200) /* as much timeout as transition duration in the css of #hippo-lightbox-bg */
+	}, hippo_lightbox_bg_transitiontime) /* as much timeout as transition duration in the css of #hippo-lightbox-bg */
 
 	// remove the event listeners, they point to images that are not opened anymore
-	getElemById("hippo-next").removeEventListener("click", load)
-	getElemById("hippo-previous").removeEventListener("click", load)
+	getElemById("hippo-next").removeEventListener("click", hippo_load)
+	getElemById("hippo-previous").removeEventListener("click", hippo_load)
 
 	removeClass(document.body, "hippo-scrollingDisabled")
 }
@@ -199,7 +205,7 @@ function close() {
  * @param elem			the img tag that was clicked on the website content
  * @param category	the category tag value from elem
  */
-function handlegroup(elem, category) {
+function hippo_handlegroup(elem, category) {
 
 	// get next, get previous
 	var nextImg = false
@@ -223,14 +229,14 @@ function handlegroup(elem, category) {
 	// 
 	// create events to next/previous picture
 	if(nextImg !== false && typeof nextImg !== typeof undefined) {
-		activateButton("hippo-next", nextImg, elem)
+		hippo_activateButton("hippo-next", nextImg, elem)
 	}
 	else {
 		addClass(getElemById("hippo-next"), "hippo-hidden")
 		removeClass(getElemById("hippo-nextOff"), "hippo-hidden")
 	}
 	if(previousImg !== false && typeof previousImg !== typeof undefined) {
-		activateButton("hippo-previous", previousImg, elem)
+		hippo_activateButton("hippo-previous", previousImg, elem)
 	}
 	else {
 		addClass(getElemById("hippo-previous"), "hippo-hidden")
@@ -247,7 +253,7 @@ function handlegroup(elem, category) {
  * (i think this is deprecated, nothing is display:none anymore but rather
  *  opacity:0 and pointer-events:none so that things can fade in and out)
  */
-function showLoadingIndicator() {
+function hippo_showLoadingIndicator() {
 	setTimeout(function() {
 		if(!hasClass(getElemById("hippo-img-container"), "loaded"))
 		{
@@ -255,7 +261,7 @@ function showLoadingIndicator() {
 		}
 		else {
 		}
-	}, 20)
+	}, hippo_trigger_transition_timeout)
 }
 
 
@@ -264,7 +270,7 @@ function showLoadingIndicator() {
  * Either called by one of the buttons in load or by clicking on an image
  * @param elem	the DOM element that is going to be displayed in the lightbox
  */
-function zoomIn(elem) {
+function hippo_zoomIn(elem) {
 
 	currentScrollX = window.scrollX
 	currentScrollY = window.scrollY
@@ -279,7 +285,7 @@ function zoomIn(elem) {
 	removeClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
 
 	// show that the image is loading
-	showLoadingIndicator()
+	hippo_showLoadingIndicator()
 
 	// display the lightbox bg
 	addClass(getElemById("hippo-lightbox-bg"), "open")
@@ -315,7 +321,7 @@ function zoomIn(elem) {
 		//  load image
 	
 		// the following onload listener will add classes once it's loaded.
-		// loading starts in the line below the listener. In the meantime let's prepare other things
+		// loading starts in the line below the listener. In the meantime var's prepare other things
 		var img = getElemById("hippo-img")
 		var preloadimg = new Image()
 		
@@ -323,11 +329,11 @@ function zoomIn(elem) {
 			// timeout for css transitions
 			window.setTimeout(function() {
 				if(!hippo_active)
-					return close()
+					return hippo_close()
 				// once the image is loaded:
 				img.src = zoomedSrc
 
-				handleNewContents(img)
+				hippo_handleNewContents(img)
 				
 				// hide the div, now it's img's turn
 				getElemById("hippo-div").innerHTML = ""
@@ -341,12 +347,12 @@ function zoomIn(elem) {
 		// timeout for css transitions
 		window.setTimeout(function() {
 			if(!hippo_active)
-				return close()
+				return hippo_close()
 			//  load div content
 			var div = getElemById("hippo-div")
 			div.innerHTML = elem.querySelector(".hippo-zoomContent-content").innerHTML
 
-			handleNewContents(div)
+			hippo_handleNewContents(div)
 			
 			// hide the img, now it's div's turn
 			getElemById("hippo-img").src = ""
@@ -361,7 +367,7 @@ function zoomIn(elem) {
 	// if this is a slideshow (category getAttribute)
 	var category = elem.getAttribute("category")
 	if (category !== null && category !== "" && category !== false && typeof category !== typeof undefined) {
-		handlegroup(elem, category)
+		hippo_handlegroup(elem, category)
 
 	} else { // if no category available
 		addClass(getElemById("hippo-next"), "hippo-hidden")
@@ -379,7 +385,7 @@ function zoomIn(elem) {
  * dom to finish loading and to display the results. Scrollbars are handled here aswell
  * @param {object} elem an image tag or a div. either #hippo-img or #hippo-div
  */
-function handleNewContents(elem) {
+function hippo_handleNewContents(elem) {
 
 	// the following controlls the scrollbar. fixes some issues compared to "auto" because
 	// the scrollbar can be displayed even though the height is still transitioning
@@ -423,7 +429,7 @@ function handleNewContents(elem) {
 		addClass(getElemById("hippo-img-container"), "hippo-heightTransitionHasFinished")
 		// the height attribute was only there to support transitions. Now to support resizing the browser window replace it with "auto".
 		getElemById("hippo-img-height").style.height = "auto"
-	}, 200)
+	}, hippo_img_height_transitiontime)
 }
 
 
@@ -452,7 +458,7 @@ function removeClass(elem, classString) {
  * @param {string} classString class to remove
  */
 function addClass(elem, classString) {
-	if(!this.hasClass(elem, classString)) {
+	if(!hasClass(elem, classString)) {
 		elem.className += (" "+classString)
 		elem.className = elem.className.trim()
 	}
@@ -475,9 +481,9 @@ function hasClass(elem, classString) {
  * @param {string} classString class to toggle
  */
 function toggleClass(elem, classString) {
-	if(this.hasClass(elem, classString))
-		this.removeClass(elem, classString)
-	else this.addClass(elem, classString)
+	if(hasClass(elem, classString))
+		removeClass(elem, classString)
+	else addClass(elem, classString)
 }
 
 /**

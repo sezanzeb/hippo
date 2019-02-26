@@ -87,13 +87,19 @@
         // in afterEach
         let hippo_img_initial = null
         let hippo_img = null
+        let hippo_caption = null
+        let hippo_caption_responsive = null
 
-        // each test starts at image 1
         beforeEach(function(done) {
+            // each test starts at image 1
             document.getElementById("1").click()
-            // wait for the image to load
+
             hippo_img = document.getElementById("hippo-img")
             hippo_img_initial = hippo_img.cloneNode(true)
+            hippo_caption = document.getElementById("hippo-caption")
+            hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
+
+            // wait for the image to load
             hippo_img.addEventListener("load", function() {
                 done()
             })
@@ -103,11 +109,10 @@
             // reset hippo_img so that the event listeners are removed
             // that might trigger expect calls
             hippo_img.parentNode.replaceChild(hippo_img_initial, hippo_img)
+            hippo_close()
         })
 
         it("clicking on image", function(done) {
-            let hippo_caption = document.getElementById("hippo-caption")
-            let hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
             expect(hippo_caption.innerHTML).toBe("caption1")
             expect(hippo_caption_responsive.innerHTML).toBe("caption1")
             expect(hippo_active).toBeTruthy()
@@ -129,10 +134,6 @@
             })
 
             it("right key", function(done) {
-                let hippo_caption = document.getElementById("hippo-caption")
-                let hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
-                let hippo_img = document.getElementById("hippo-img")
-
                 expect(hippo_caption.innerHTML).toBe("caption2")
                 expect(hippo_caption_responsive.innerHTML).toBe("caption2")
                 expect(hippo_img.src).toContain("/example/pic2.jpeg")
@@ -140,17 +141,12 @@
             })
 
             it("right and left keys", function(done) {
-                let hippo_caption = document.getElementById("hippo-caption")
-                let hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
-                let hippo_img = document.getElementById("hippo-img")
-
                 hippo_img.addEventListener("load", function() {
                     expect(hippo_caption.innerHTML).toBe("caption1")
                     expect(hippo_caption_responsive.innerHTML).toBe("caption1")
                     expect(hippo_img.src).toContain("/example/pic1.jpeg")
                     done()
                 })
-
                 // left keyCode
                 window.dispatchEvent(new KeyboardEvent("keydown", {keyCode : 37}))
             })
