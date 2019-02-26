@@ -47,37 +47,37 @@
         })
 
         it("has class", function() {
-            expect(hasClass(div, "class1")).toBeTruthy()
-            expect(hasClass(div, "class2")).toBeTruthy()
-            expect(hasClass(div, "class3")).toBeTruthy()
-            expect(hasClass(div, "class4")).toBeTruthy()
+            expect(hippo.hasClass(div, "class1")).toBeTruthy()
+            expect(hippo.hasClass(div, "class2")).toBeTruthy()
+            expect(hippo.hasClass(div, "class3")).toBeTruthy()
+            expect(hippo.hasClass(div, "class4")).toBeTruthy()
         })
 
         it("remove class", function() {
             // removing from beginning
-            removeClass(div, "class1")
+            hippo.removeClass(div, "class1")
             expect(div.className).toBe("class2 class3 class4")
             // removing from middle
-            toggleClass(div, "class3")
+            hippo.toggleClass(div, "class3")
             expect(div.className).toBe("class2 class4")
             // removing from end
-            removeClass(div, "class4")
+            hippo.removeClass(div, "class4")
             expect(div.className).toBe("class2")
             // removing the only class
-            removeClass(div, "class2")
+            hippo.removeClass(div, "class2")
             expect(div.hasAttribute("class")).toBeFalsy()
         }) 
 
         it("add class", function() {
-            addClass(div, "class5")
+            hippo.addClass(div, "class5")
             expect(div.className).toBe("class1 class2 class3 class4 class5")
         }) 
 
         it("toggle class", function() {
-            toggleClass(div, "class1")
-            expect(hasClass(div, "class1")).toBeFalsy()
-            toggleClass(div, "class1")
-            expect(hasClass(div, "class1")).toBeTruthy()
+            hippo.toggleClass(div, "class1")
+            expect(hippo.hasClass(div, "class1")).toBeFalsy()
+            hippo.toggleClass(div, "class1")
+            expect(hippo.hasClass(div, "class1")).toBeTruthy()
         }) 
     })
 
@@ -109,13 +109,13 @@
             // reset hippo_img so that the event listeners are removed
             // that might trigger expect calls
             hippo_img.parentNode.replaceChild(hippo_img_initial, hippo_img)
-            hippo_close()
+            hippo.close()
         })
 
         it("clicking on image", function(done) {
             expect(hippo_caption.innerHTML).toBe("caption1")
             expect(hippo_caption_responsive.innerHTML).toBe("caption1")
-            expect(hippo_active).toBeTruthy()
+            expect(hippo.isActive()).toBeTruthy()
             done()
         })
 
@@ -154,7 +154,7 @@
             it("esc key", function(done) {
                 // esc keyCode
                 window.dispatchEvent(new KeyboardEvent("keydown", {keyCode : 27}))
-                expect(hippo_active).toBeFalsy()
+                expect(hippo.isActive()).toBeFalsy()
                 done()
             })
         })

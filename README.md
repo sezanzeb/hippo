@@ -7,7 +7,7 @@
 - Flat Designed
 - No Dependencies
 - The tags that belong to the same category don't need to be in the same container.
-- Supports IE9
+- Releases Support IE9 (master branch might not be tested on IE9)
 - Link two files, add an attribute to your tag, done.
 
 <br/>
