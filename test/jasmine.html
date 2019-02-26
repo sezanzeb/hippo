@@ -1,0 +1,166 @@
+<html lang="en">
+    <head>
+        <title>Hippo Jasmine tests</title>
+		<script src="../src/hippo-gallery.js"></script>
+        <script type="text/javascript" src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+        <script type="text/javascript" src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+        <script type="text/javascript" src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+        <link rel="stylesheet" type="text/css" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+		<link rel="stylesheet" href="../src/hippo-gallery.css" type="text/css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+	<body>
+        <!-- some hidden examples for hippo that will be triggered during the tests -->
+        <div style="display:none">
+            <p><img id="1" category="group" zoom="../example/pic1.jpeg" src="../example/pic1.jpeg" caption="caption1"/></p>
+            <p><span id="2" category="group" zoom="../example/pic2.jpeg" caption="caption2">clicklable span content</span></p>
+            <p><img id="3" category="group" zoom="../example/pic3.jpeg" src="../example/pic3.jpeg" caption="caption3"/></p>
+            <p>
+                <div id="4" class="hippo-zoomContent" category="group" caption="caption4"/>
+                    text1
+                    <div class="hippo-zoomContent-content">
+                        text2
+                    </div>
+                </div>
+            </p>
+            <div id="5" category="group" zoom="pic2.jpeg" caption="caption5"/>clicklable div content</div>
+        </div>
+	</body>
+</html>
+<style>
+    #hippo-lightbox-bg {
+        /* hippo should still work invisibly, as it
+        shouldn't rely on checking the style values but
+        rather on state classes or state variables */
+        display: none !important;
+    }
+</style>
+<script>
+    "use strict"
+
+    describe("testing utils functions", function() {
+        
+        let div = document.createElement("div")
+
+        beforeEach(function() {
+            div.className = "class1 class2 class3 class4"
+        })
+
+        it("has class", function() {
+            expect(hasClass(div, "class1")).toBeTruthy()
+            expect(hasClass(div, "class2")).toBeTruthy()
+            expect(hasClass(div, "class3")).toBeTruthy()
+            expect(hasClass(div, "class4")).toBeTruthy()
+        })
+
+        it("remove class", function() {
+            // removing from beginning
+            removeClass(div, "class1")
+            expect(div.className).toBe("class2 class3 class4")
+            // removing from middle
+            toggleClass(div, "class3")
+            expect(div.className).toBe("class2 class4")
+            // removing from end
+            removeClass(div, "class4")
+            expect(div.className).toBe("class2")
+            // removing the only class
+            removeClass(div, "class2")
+            expect(div.hasAttribute("class")).toBeFalsy()
+        }) 
+
+        it("add class", function() {
+            addClass(div, "class5")
+            expect(div.className).toBe("class1 class2 class3 class4 class5")
+        }) 
+
+        it("toggle class", function() {
+            toggleClass(div, "class1")
+            expect(hasClass(div, "class1")).toBeFalsy()
+            toggleClass(div, "class1")
+            expect(hasClass(div, "class1")).toBeTruthy()
+        }) 
+    })
+
+    describe("events", function() {
+
+        // have this here so that hippo_img_initial can be accessed
+        // in afterEach
+        let hippo_img_initial = null
+        let hippo_img = null
+
+        // each test starts at image 1
+        beforeEach(function(done) {
+            document.getElementById("1").click()
+            // wait for the image to load
+            hippo_img = document.getElementById("hippo-img")
+            hippo_img_initial = hippo_img.cloneNode(true)
+            hippo_img.addEventListener("load", function() {
+                done()
+            })
+        })
+
+        afterEach(function() {
+            // reset hippo_img so that the event listeners are removed
+            // that might trigger expect calls
+            hippo_img.parentNode.replaceChild(hippo_img_initial, hippo_img)
+        })
+
+        it("clicking on image", function(done) {
+            let hippo_caption = document.getElementById("hippo-caption")
+            let hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
+            expect(hippo_caption.innerHTML).toBe("caption1")
+            expect(hippo_caption_responsive.innerHTML).toBe("caption1")
+            expect(hippo_active).toBeTruthy()
+            done()
+        })
+
+        // now that the image is loaded, press the right key
+        // and perform further tests
+        describe("key navigation", function() {
+
+            // will call the beforeEach function of the parent describe first
+            beforeEach(function(done) {
+                // wait for the image to load
+                hippo_img.addEventListener("load", function() {
+                    done()
+                })
+                // right keyCode
+                window.dispatchEvent(new KeyboardEvent("keydown", {keyCode : 39}))
+            })
+
+            it("right key", function(done) {
+                let hippo_caption = document.getElementById("hippo-caption")
+                let hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
+                let hippo_img = document.getElementById("hippo-img")
+
+                expect(hippo_caption.innerHTML).toBe("caption2")
+                expect(hippo_caption_responsive.innerHTML).toBe("caption2")
+                expect(hippo_img.src).toContain("/example/pic2.jpeg")
+                done()
+            })
+
+            it("right and left keys", function(done) {
+                let hippo_caption = document.getElementById("hippo-caption")
+                let hippo_caption_responsive = document.getElementById("hippo-caption-responsive")
+                let hippo_img = document.getElementById("hippo-img")
+
+                hippo_img.addEventListener("load", function() {
+                    expect(hippo_caption.innerHTML).toBe("caption1")
+                    expect(hippo_caption_responsive.innerHTML).toBe("caption1")
+                    expect(hippo_img.src).toContain("/example/pic1.jpeg")
+                    done()
+                })
+
+                // left keyCode
+                window.dispatchEvent(new KeyboardEvent("keydown", {keyCode : 37}))
+            })
+
+            it("esc key", function(done) {
+                // esc keyCode
+                window.dispatchEvent(new KeyboardEvent("keydown", {keyCode : 27}))
+                expect(hippo_active).toBeFalsy()
+                done()
+            })
+        })
+    })
+</script>

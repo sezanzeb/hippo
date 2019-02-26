@@ -1,0 +1,13 @@
+{
+  "name": "hippo-tests",
+  "version": "1.0.0",
+  "description": "tests for the hippo slideshow",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo open jasmine.html in your browser"
+  },
+  "author": "sezanzeb",
+  "dependencies": {
+    "jasmine-core": "^3.3.0"
+  }
+}

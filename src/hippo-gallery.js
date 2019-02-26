@@ -174,12 +174,12 @@ function close() {
 		// of user input
 		if(hippo_active)
 			return
-		getElemById("hippo-img-height").style = ""
-		getElemById("hippo-img").style = ""
+		getElemById("hippo-img-height").removeAttribute("style")
+		getElemById("hippo-img").removeAttribute("style")
 		getElemById("hippo-img-container").removeAttribute("class")
 		getElemById("hippo-div").innerHTML = ""
 		getElemById("hippo-lightbox-bg").style.display = "none"
-		getElemById("hippo-img").src = ""
+		getElemById("hippo-img").removeAttribute("src")
 	}, 200) /* as much timeout as transition duration in the css of #hippo-lightbox-bg */
 
 	// remove the event listeners, they point to images that are not opened anymore
