@@ -95,8 +95,6 @@ Displays text, tables, anything that fits into the div "hippo-zoomContent-conten
     </div>
 
 </div>
-
-<br/>
 ```
 
 ### Click on a Div to Open an Image
