@@ -14,7 +14,7 @@
 
 ## Live Example
 
-http://hip70890b.de/web.php#Hippo
+http://hip70890b.de/web/hippo/
 
 <br/>
 
