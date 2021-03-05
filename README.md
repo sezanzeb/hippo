@@ -10,19 +10,13 @@
 - Releases Support IE9 (master branch might not be tested on IE9)
 - Link two files, add an attribute to your tag, done.
 
-<br/>
-
 ## Live Example
 
-http://hip70890b.de/web/hippo/
-
-<br/>
+https://sezanzeb.de/web/hippo/
 
 ## How To
 
 You can find the css and js files here: https://github.com/sezanzeb/Hippo/tree/master/src
-
-<br/>
 
 ### Minimal Working Example
 
@@ -55,8 +49,6 @@ style it the way you like using the following css for example, to make it look l
     }
 ```
 
-<br/>
-
 ### Captions and Categories
 
 Activates navigation using arrow keys or the buttons on the top left and top right of the lightbox
@@ -69,8 +61,6 @@ Activates navigation using arrow keys or the buttons on the top left and top rig
     <img category="category2" zoom="pic2.jpg" src="preview2.jpeg" caption="caption2"/>
     <span category="category2" caption="caption3" zoom="pic3.jpg" zoom="full.jpg">click here</span>
 ```
-
-<br/>
 
 ### Displaying HTML Content Inside the Lightbox 
 
